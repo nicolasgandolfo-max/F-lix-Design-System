@@ -1,0 +1,47 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { {{name}} } from "@felix/ui";
+
+const meta = {
+  title: "Components/{{type}}/{{name}}",
+  component: {{name}},
+  parameters: { layout: "centered" },
+  tags: ["autodocs"],
+  argTypes: {
+    variant: {
+      description: "Visual variant of the component.",
+      control: { type: "select" },
+      options: ["default"],
+      table: {
+        defaultValue: { summary: "default" },
+        type: { summary: "enum" },
+      },
+    },
+    className: {
+      description: "Additional classes merged via cn().",
+      control: false,
+      table: { type: { summary: "string" } },
+    },
+  },
+} satisfies Meta<typeof {{name}}>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    children: "{{name}}",
+  },
+};
+
+export const DarkMode: Story = {
+  decorators: [
+    (Story) => (
+      <div className="dark bg-background p-6 rounded-xl">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    children: "{{name}} (dark)",
+  },
+};

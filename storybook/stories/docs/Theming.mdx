@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Felix UI/Theming" />
+
+# Theming
+
+Felix UI uses **CSS custom properties** (variables) for colors, radii, spacing, typography, and shadows. The Tailwind preset maps these to utilities (for example semantic `text-foreground` and brand scales such as `text-turquoise`).
+
+## Token source
+
+Tokens are defined in **`packages/ui/src/tokens/tokens.ts`** and built into **`theme.css`**. Consumers should not edit generated CSS by hand; extend the token file and run the token build script from the monorepo when contributing upstream.
+
+## Light and dark mode
+
+Dark mode is class-based: add **`dark`** on an ancestor (commonly `<html>` or `<body>`). The Storybook toolbar also toggles a global `dark` class on the document root for previews.
+
+```tsx
+<div className="dark">
+  <Button variant="primary">Example</Button>
+</div>
+```
+
+Use **semantic** tokens (`background`, `foreground`, `muted`, `destructive`, etc.) so both themes stay correct without hardcoding light or dark colors.
+
+## Overrides
+
+Prefer **semantic tokens** in product code (`bg-background`, `text-muted-foreground`). For one-off branding, you can override CSS variables at the scope where the subtree should change, or extend the preset in the consumer app—avoid scattering raw hex values in components.
+
+## Color swatches in Storybook
+
+Decorative token swatches may intentionally relax some contrast checks. Elements can opt out of the contrast rule with **`data-a11y-ignore="color-contrast"`** when they are illustrative only.

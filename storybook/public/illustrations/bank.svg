@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 72" fill="none">
+  <!-- Base platform -->
+  <rect x="8" y="58" width="64" height="8" rx="3" fill="#082422"/>
+  <!-- Main building body -->
+  <rect x="14" y="32" width="52" height="28" rx="2" fill="#2BF2F1"/>
+  <!-- Building shadow/depth -->
+  <rect x="14" y="32" width="52" height="4" rx="0" fill="#10a8a7"/>
+  <!-- Columns -->
+  <rect x="18" y="34" width="6" height="24" rx="1" fill="#082422" opacity="0.15"/>
+  <rect x="29" y="34" width="6" height="24" rx="1" fill="#082422" opacity="0.15"/>
+  <rect x="40" y="34" width="6" height="24" rx="1" fill="#082422" opacity="0.15"/>
+  <rect x="51" y="34" width="6" height="24" rx="1" fill="#082422" opacity="0.15"/>
+  <!-- Pediment (triangular roof base) -->
+  <rect x="10" y="28" width="60" height="6" rx="2" fill="#082422"/>
+  <!-- Roof triangle -->
+  <polygon points="40,8 10,28 70,28" fill="#082422"/>
+  <!-- Roof highlight -->
+  <polygon points="40,12 14,28 66,28" fill="#0F3330" opacity="0.3"/>
+  <!-- Door -->
+  <rect x="33" y="44" width="14" height="16" rx="3" fill="#082422" opacity="0.25"/>
+  <!-- Window -->
+  <rect x="20" y="38" width="8" height="8" rx="1" fill="#082422" opacity="0.2"/>
+  <rect x="52" y="38" width="8" height="8" rx="1" fill="#082422" opacity="0.2"/>
+</svg>

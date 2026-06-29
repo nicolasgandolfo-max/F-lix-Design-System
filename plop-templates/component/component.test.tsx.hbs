@@ -1,0 +1,26 @@
+import { render, screen } from "@testing-library/react";
+import { axe } from "jest-axe";
+import { describe, it, expect } from "vitest";
+import { {{name}} } from "./{{kebabCase name}}";
+
+describe("{{name}}", () => {
+  it("renders children", () => {
+    render(<{{name}}>Content</{{name}}>);
+    expect(screen.getByText("Content")).toBeInTheDocument();
+  });
+
+  it("forwards native attributes to the root element", () => {
+    render(
+      <{{name}} aria-label="test label" role="region">
+        Content
+      </{{name}}>,
+    );
+    const el = screen.getByRole("region", { name: "test label" });
+    expect(el).toHaveTextContent("Content");
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(<{{name}}>Content</{{name}}>);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+});

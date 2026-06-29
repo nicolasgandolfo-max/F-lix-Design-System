@@ -1,0 +1,62 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Felix UI/Introduction" />
+
+# Felix UI
+
+Felix UI is the internal React component library for Felix products. It is built on **Tailwind CSS v4**, a shared **design token** pipeline, and a small set of primitives (currently **Button** and **Text**) so consumers compile only the CSS they use (“zero CSS bundle” from the package’s perspective).
+
+## Installation
+
+```bash
+npm install @felix/ui
+```
+
+Peer dependencies (see the package README for exact ranges):
+
+- `react`, `react-dom`
+- `tailwindcss`, `@tailwindcss/postcss`
+
+## Setup in an app
+
+1. **Add the Tailwind preset** so theme tokens and utilities resolve:
+
+```ts
+import type { Config } from "tailwindcss";
+import felixPreset from "@felix/ui/preset";
+
+export default {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@felix/ui/dist/**/*.{js,mjs}",
+  ],
+  presets: [felixPreset],
+} satisfies Config;
+```
+
+2. **Import theme and fonts** from the package entry points:
+
+```ts
+import "@felix/ui/theme.css";
+import "@felix/ui/fonts.css";
+```
+
+3. **Use components**:
+
+```tsx
+import { Button } from "@felix/ui";
+
+export function Example() {
+  return (
+    <Button variant="primary" size="default">
+      Get started
+    </Button>
+  );
+}
+```
+
+## Architecture
+
+Components ship as **ESM + CJS** with TypeScript types. Styling is expressed as **Tailwind class strings** in source; your application’s Tailwind build generates the final CSS. Tokens are the single source of truth in `packages/ui` and flow through CSS variables and the preset.
+
+For versioning and releases, see the monorepo **`docs/VERSIONING.md`** (Changesets).

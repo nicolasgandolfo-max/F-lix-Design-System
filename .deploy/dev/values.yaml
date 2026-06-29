@@ -1,0 +1,121 @@
+app:
+  name: storybook-felix-ui
+  namespace: storybook-felix-ui
+  lifecycle: Deployment
+  replicaCount: 1
+  environment: dev
+  squadName: devops
+
+service:
+  enabled: true
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 4180
+      targetPort: 4180
+      protocol: TCP
+
+ingress:
+  - name: storybook-felix-ui-default
+    hostname: storybook-felix-ui
+    type: public
+    ports:
+      - name: https
+        port: 443
+        targetPort: 4180
+        protocol: HTTPS
+        path: /
+
+externalServices:
+  google-accounts:
+    host: accounts.google.com
+    ports:
+      - number: 443
+        name: https
+        protocol: HTTPS
+  google-oauth2:
+    host: oauth2.googleapis.com
+    ports:
+      - number: 443
+        name: https
+        protocol: HTTPS
+
+pod:
+  restartPolicy: Always
+  terminationGracePeriodSecs: 30
+  container:
+    - name: storybook-felix-ui
+      repository: us-docker.pkg.dev/felix-shared-services/felix-container-dev/storybook-felix-ui
+      ports:
+        - containerPort: 80
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 80
+        periodSeconds: 10
+        failureThreshold: 3
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 80
+        periodSeconds: 15
+        failureThreshold: 3
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "256Mi"
+      env:
+        - name: NEW_RELIC_LICENSE_KEY
+    - name: oauth2-proxy
+      repository: quay.io/oauth2-proxy/oauth2-proxy
+      tag: v7.7.1
+      ports:
+        - containerPort: 4180
+      readinessProbe:
+        httpGet:
+          path: /ping
+          port: 4180
+        periodSeconds: 5
+        failureThreshold: 3
+      livenessProbe:
+        httpGet:
+          path: /ping
+          port: 4180
+        periodSeconds: 10
+        failureThreshold: 3
+      resources:
+        requests:
+          memory: "32Mi"
+          cpu: "25m"
+        limits:
+          memory: "128Mi"
+      env:
+        - name: NEW_RELIC_LICENSE_KEY
+        - name: OAUTH2_PROXY_PROVIDER
+          value: "google"
+        - name: OAUTH2_PROXY_EMAIL_DOMAINS
+          value: "felixpago.com,ext.felixpago.com"
+        - name: OAUTH2_PROXY_UPSTREAMS
+          value: "http://localhost:80"
+        - name: OAUTH2_PROXY_HTTP_ADDRESS
+          value: "0.0.0.0:4180"
+        - name: OAUTH2_PROXY_REDIRECT_URL
+          value: "https://storybook-felix-ui.dev.fpago.com/oauth2/callback"
+        - name: OAUTH2_PROXY_COOKIE_SECURE
+          value: "true"
+        - name: OAUTH2_PROXY_SKIP_PROVIDER_BUTTON
+          value: "true"
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: "956665378860-v57cg44526udjbljl1hp2e8h8k4m58fl.apps.googleusercontent.com"
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: storybook-felix-ui-oauth2-client-secret
+              key: storybook-felix-ui_oauth2_client_secret
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: storybook-felix-ui-oauth2-cookie-secret
+              key: storybook-felix-ui_oauth2_cookie_secret

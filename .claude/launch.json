@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "felix-design-app", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "-w", "@felix/design-system-site", "--", "--port", "5191", "--strictPort"], "port": 5191 }
+  ]
+}

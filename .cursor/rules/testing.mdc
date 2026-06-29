@@ -1,0 +1,18 @@
+---
+description: Vitest/Testing Library — queries, user-event, a11y, behavior-focused tests
+globs:
+  - "**/*.test.tsx"
+alwaysApply: false
+---
+
+# Testing (felix-ui)
+
+## Rules
+
+1. **`describe` structure** — One top-level `describe` per component; nest `describe` blocks by feature or state.
+2. **Testing Library queries** — Prefer accessible queries (`getByRole`, `getByLabelText`, etc.) over `getByTestId` or `querySelector`. Use `data-testid` / `getByTestId` only when there is no good semantic query.
+3. **`userEvent` over `fireEvent`** — Use `@testing-library/user-event` for interactions so behavior matches real user input.
+4. **A11y check per suite** — Include a test using `jest-axe` (or the project’s configured axe helper) on the rendered output for the main variants you cover.
+5. **Behavior, not implementation** — Do not assert on CSS class strings, internal state, or internal function calls. Assert what the user sees and what events/outcomes occur.
+6. **Compound components** — Verify context wiring by asserting behavior of sub-parts when parent state or props change.
+7. **Minimal mocks** — Mock only what is necessary (e.g. timers, network). If the component uses Radix, test with Radix rather than mocking primitives unless there is a documented reason.

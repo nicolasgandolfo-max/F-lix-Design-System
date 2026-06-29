@@ -1,0 +1,30 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Felix UI/Accessibility" />
+
+# Accessibility
+
+Felix UI targets **WCAG 2.1 AA** for components used as documented. As the library grows, complex patterns may use accessible primitives (for example from Radix) where they add clear value.
+
+## Storybook addon
+
+Use the **Accessibility** panel (axe) while developing stories. It runs against the **Accessibility** tab in the addon toolbar and highlights violations with links to remediation guidance.
+
+Keyboard navigation and focus order should be verified for each new component or variant.
+
+## Testing in code
+
+The library uses **Vitest**, **Testing Library**, and **jest-axe** in component tests. Prefer queries by **role** and **label**; assert behavior, not CSS class names.
+
+## Reporting issues
+
+If you find a keyboard trap, incorrect role, or missing label, open an issue with:
+
+- Component and story name
+- Steps to reproduce
+- Browser and assistive technology (if applicable)
+
+## Patterns
+
+- Prefer native semantics and accessible names (`aria-label`, `aria-labelledby`) where components expose them.
+- `data-slot` attributes are stable hooks for tests and debugging—not a substitute for accessible names.

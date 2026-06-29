@@ -1,0 +1,26 @@
+# Source files
+src/
+.storybook/
+*.stories.tsx
+
+# Config files
+tsconfig.json
+rollup.config.mjs
+eslint.config.mjs
+postcss.config.mjs
+tailwind.config.ts
+
+# Development files
+node_modules/
+.DS_Store
+*.log
+
+# Build artifacts
+*.tsbuildinfo
+storybook-static/
+
+# Git
+.git/
+.gitignore
+
+

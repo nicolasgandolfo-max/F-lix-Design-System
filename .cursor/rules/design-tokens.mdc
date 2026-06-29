@@ -1,0 +1,18 @@
+---
+description: Design tokens — CSS vars, Tailwind, tokens.ts as source of truth
+globs:
+  - "**/*.css"
+  - "**/tokens/**"
+alwaysApply: false
+---
+
+# Design tokens (felix-ui)
+
+## Rules
+
+1. **No raw values** — Do not hardcode hex colors, pixel spacing, or arbitrary radii (e.g. `#2bf2f1`, `16px`, `8px`). Use the design system tokens.
+2. **In `.css` files** — Reference CSS custom properties, e.g. `var(--color-turquoise)`, `var(--spacing-md)`, `var(--radius-lg)`.
+3. **In Tailwind classes** — Use token-backed utilities such as `text-turquoise`, `p-md`, `rounded-lg` as defined by the Tailwind preset mapping to those variables.
+4. **Semantic names** — Prefer semantic tokens: e.g. `text-foreground` not `text-slate-950`, `bg-background` not `bg-white`.
+5. **`tokens.ts` is the source of truth** — Add or change tokens in `packages/ui/src/tokens/tokens.ts`, then regenerate with `npm run build:tokens` (from the package/root as documented). Do not hand-edit generated `theme.css` (or equivalent generated theme output) as the primary workflow.
+6. **State colors** — Use semantic state tokens (`destructive`, `muted`, etc.) instead of raw palette utilities (`red-400`, `gray-300`) unless documenting raw palette in token showcase stories.

@@ -1,0 +1,733 @@
+/**
+ * Felix UI Theme - Tailwind CSS v4
+ *
+ * ⚠️  GENERATED FILE — do not edit manually.
+ * Edit packages/ui/src/tokens/tokens.ts and run `npm run build:tokens`.
+ *
+ * @example
+ * // In your app's CSS:
+ * @import "tailwindcss";
+ * @import "@felix/ui/fonts.css";  // Optional: if using Felix fonts
+ * @import "@felix/ui/theme.css";
+ */
+
+:root {
+  --turquoise: #2bf2f1;
+  --slate: #082422;
+  --concrete: #cfcabf;
+  --stone: #efebe7;
+  --linen: #fefcf9;
+  --blueberry: #6060bf;
+  --evergreen: #35605f;
+  --mocha: #877867;
+  --papaya: #f26629;
+  --sky: #8dfdfa;
+  --cactus: #60d06f;
+  --yam: #c1a98a;
+  --mango: #f19d38;
+  --light-sky: #d4fffe;
+  --lime: #dcff00;
+  --lychee: #ffcd9c;
+  --fortuna: #ffb05a;
+  --sage: #7ba882;
+  --sage-700: #4e7d56;
+  --turquoise-50: #f0fffe;
+  --turquoise-100: #d4fffe;
+  --turquoise-200: #a8fffe;
+  --turquoise-300: #8dfdfa;
+  --turquoise-400: #5af5f4;
+  --turquoise-500: #2bf2f1;
+  --turquoise-600: #1abfbe;
+  --turquoise-700: #0f8c8b;
+  --turquoise-800: #065958;
+  --turquoise-900: #023333;
+  --slate-50: #e8f4f3;
+  --slate-100: #c3e2e1;
+  --slate-200: #97cbc9;
+  --slate-300: #6ab3b1;
+  --slate-400: #4d9290;
+  --slate-500: #35605f;
+  --slate-600: #234343;
+  --slate-700: #152b2a;
+  --slate-800: #082422;
+  --slate-900: #031312;
+  --neutral-50: #ffffff;
+  --neutral-100: #fefcf9;
+  --neutral-200: #efebe7;
+  --neutral-300: #ddd9cf;
+  --neutral-400: #cfcabf;
+  --neutral-500: #adaa9e;
+  --neutral-600: #8a8780;
+  --neutral-700: #636158;
+  --neutral-800: #3e3c35;
+  --neutral-900: #1c1b16;
+  --earth-50: #fbf8f4;
+  --earth-100: #f2e9de;
+  --earth-200: #e3d3ba;
+  --earth-300: #d4bd9f;
+  --earth-400: #c1a98a;
+  --earth-500: #a58e72;
+  --earth-600: #877867;
+  --earth-700: #6b5e50;
+  --earth-800: #4f4438;
+  --earth-900: #332d23;
+  --green-50: #eefbf0;
+  --green-100: #d4f5da;
+  --green-200: #aaebb4;
+  --green-300: #82e091;
+  --green-400: #60d06f;
+  --green-500: #42b552;
+  --green-600: #2d9a3c;
+  --green-700: #1b7a29;
+  --green-800: #0e5a1a;
+  --green-900: #053a0d;
+  --orange-50: #fff5ef;
+  --orange-100: #ffe2cc;
+  --orange-200: #ffc299;
+  --orange-300: #ff9f66;
+  --orange-400: #f77b42;
+  --orange-500: #f26629;
+  --orange-600: #cc4d14;
+  --orange-700: #a03808;
+  --orange-800: #742703;
+  --orange-900: #481600;
+  --amber-50: #fff8ee;
+  --amber-100: #ffefd5;
+  --amber-200: #ffe0b2;
+  --amber-300: #ffcd9c;
+  --amber-400: #ffb05a;
+  --amber-500: #f19d38;
+  --amber-600: #d07a1a;
+  --amber-700: #a85c0a;
+  --amber-800: #7a4004;
+  --amber-900: #502800;
+  --blueberry-50: #f2eeff;
+  --blueberry-100: #ddd5ff;
+  --blueberry-200: #bbabff;
+  --blueberry-300: #9882f5;
+  --blueberry-400: #6e58d8;
+  --blueberry-500: #3b2e8c;
+  --blueberry-600: #2a1f6b;
+  --blueberry-700: #1c1249;
+  --blueberry-800: #100a30;
+  --blueberry-900: #07041a;
+  --lime-50: #fefff0;
+  --lime-100: #fbffd6;
+  --lime-200: #f5ffa3;
+  --lime-300: #eaff57;
+  --lime-400: #dcff00;
+  --lime-500: #b2d000;
+  --lime-600: #87a000;
+  --lime-700: #5e7000;
+  --lime-800: #364000;
+  --lime-900: #181c00;
+  --yellow-50: #fffce0;
+  --yellow-100: #fff7b0;
+  --yellow-200: #ffef70;
+  --yellow-300: #ffe53a;
+  --yellow-400: #ffd91a;
+  --yellow-500: #ffd200;
+  --yellow-600: #ccaa00;
+  --yellow-700: #998000;
+  --yellow-800: #665500;
+  --yellow-900: #332a00;
+  --background: #fefcf9;
+  --foreground: #082422;
+  --card: #fefcf9;
+  --card-foreground: #082422;
+  --popover: #ffffff;
+  --popover-foreground: #082422;
+  --primary: #2bf2f1;
+  --primary-foreground: #082422;
+  --secondary: #adaa9e;
+  --secondary-foreground: #082422;
+  --muted: #efebe7;
+  --muted-foreground: #6ab3b1;
+  --accent: #dcff00;
+  --accent-foreground: #082422;
+  --destructive: #f26629;
+  --destructive-foreground: #082422;
+  --border: #cfcabf;
+  --input: #877867;
+  --ring: #877867;
+  --link: #10a8a7;
+  --chart-1: #2bf2f1;
+  --chart-2: #42b552;
+  --chart-3: #f19d38;
+  --chart-4: #6e58d8;
+  --chart-5: #f77b42;
+  --spacing-0: 0px;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-7: 1.75rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --border-width-thin: 1px;
+  --border-width-medium: 1.5px;
+  --border-width-thick: 2px;
+  --radius-none: 0px;
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-full: 9999px;
+  --text-30: 1.875rem;
+  --text-36: 2.25rem;
+  --text-60: 3.75rem;
+  --text-72: 4.5rem;
+  --text-xxs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.5rem;
+  --text-7xl: 4rem;
+  --text-8xl: 5rem;
+  --leading-none: 1;
+  --leading-display: 1.1;
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+  --leading-loose: 2;
+  --leading-heading-2: 1.4;
+  --leading-heading-3: 1.5;
+  --leading-body: 1.5;
+  --tracking-tighter: -.05em;
+  --tracking-tight: -.025em;
+  --tracking-normal: 0;
+  --tracking-wide: .025em;
+  --tracking-wider: .05em;
+  --tracking-display: -.02em;
+  --tracking-heading: -.01em;
+  --tracking-caption: 0.0025em;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --shadow-xs: 0 1px 2px rgba(8, 36, 34, 0.03);
+  --shadow-sm: 0 1px 3px rgba(8, 36, 34, 0.06), 0 1px 2px rgba(8, 36, 34, 0.04);
+  --shadow-md: 0 4px 6px rgba(8, 36, 34, 0.06), 0 2px 4px rgba(8, 36, 34, 0.04);
+  --shadow-lg: 0 10px 15px rgba(8, 36, 34, 0.06), 0 4px 6px rgba(8, 36, 34, 0.03);
+  --shadow-xl: 0 20px 25px rgba(8, 36, 34, 0.06), 0 8px 10px rgba(8, 36, 34, 0.03);
+  --shadow-2xl: 0 25px 50px rgba(8, 36, 34, 0.12);
+  --shadow-inner: inset 0 2px 4px rgba(8, 36, 34, 0.04);
+  --shadow-turquoise: 0 4px 14px rgba(43, 242, 241, 0.25);
+  --shadow-selection: 0 0 0 6px rgba(43, 242, 241, 0.1);
+  --interactive-primary-hover: #1abfbe;
+  --interactive-primary-active: #2bf2f1;
+  --interactive-primary-disabled: #d4fffe;
+  --interactive-secondary-hover: #adaa9e;
+  --interactive-secondary-active: #cfcabf;
+  --interactive-secondary-disabled: #f2e9de;
+  --interactive-ghost-hover: #efebe7;
+  --interactive-ghost-active: #fefcf9;
+  --interactive-ghost-disabled: #fefcf9;
+  --interactive-danger-hover: #cc4d14;
+  --interactive-danger-active: #f26629;
+  --interactive-danger-disabled: #fff5ef;
+  --interactive-slate-hover: #152b2a;
+  --interactive-slate-active: #234343;
+  --interactive-slate-disabled: #c3e2e1;
+  --status-success-bg: #eefbf0;
+  --status-success: #60d06f;
+  --status-success-text: #1b7a29;
+  --status-warning-bg: #fffce0;
+  --status-warning: #ffd200;
+  --status-warning-text: #665500;
+  --status-error-bg: #fff5ef;
+  --status-error: #f26629;
+  --status-error-text: #a03808;
+  --status-info-bg: #f2eeff;
+  --status-info: #3b2e8c;
+  --status-info-text: #1c1249;
+}
+
+.dark {
+  --background: #082422;
+  --foreground: #fefcf9;
+  --card: #234343;
+  --card-foreground: #fefcf9;
+  --popover: #152b2a;
+  --popover-foreground: #082422;
+  --primary: #2bf2f1;
+  --primary-foreground: #082422;
+  --secondary: #35605f;
+  --secondary-foreground: #fefcf9;
+  --muted: #152b2a;
+  --muted-foreground: #cfcabf;
+  --accent: #b2d000;
+  --accent-foreground: #082422;
+  --destructive: #f26629;
+  --destructive-foreground: #082422;
+  --border: #35605f;
+  --input: #35605f;
+  --ring: #cfcabf;
+  --chart-1: #5af5f4;
+  --chart-2: #60d06f;
+  --chart-3: #ffb05a;
+  --chart-4: #9882f5;
+  --chart-5: #ff9f66;
+  --interactive-primary-hover: #8dfdfa;
+  --interactive-primary-active: #2bf2f1;
+  --interactive-primary-disabled: #023333;
+  --interactive-secondary-hover: #ddd9cf;
+  --interactive-secondary-active: #adaa9e;
+  --interactive-secondary-disabled: #3e3c35;
+  --interactive-ghost-hover: #234343;
+  --interactive-ghost-active: #082422;
+  --interactive-ghost-disabled: #082422;
+  --interactive-danger-hover: #ffc299;
+  --interactive-danger-active: #f26629;
+  --interactive-danger-disabled: #742703;
+  --interactive-slate-hover: #e8f4f3;
+  --interactive-slate-active: #97cbc9;
+  --interactive-slate-disabled: #234343;
+  --status-success-bg: #eefbf0;
+  --status-success: #60d06f;
+  --status-success-text: #1b7a29;
+  --status-warning-bg: #fffce0;
+  --status-warning: #ffd200;
+  --status-warning-text: #665500;
+  --status-error-bg: #fff5ef;
+  --status-error: #f26629;
+  --status-error-text: #a03808;
+  --status-info-bg: #f2eeff;
+  --status-info: #3b2e8c;
+  --status-info-text: #1c1249;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  /*
+   * Brand primary scale (turquoise). Exposed so components can reach for
+   * mode-invariant primitives when a semantic token isn't a fit — e.g. the
+   * soft brand surface used by the default Toast / Alert variant.
+   */
+  --color-turquoise-50: var(--turquoise-50);
+  --color-turquoise-100: var(--turquoise-100);
+  --color-turquoise-200: var(--turquoise-200);
+  --color-turquoise-300: var(--turquoise-300);
+  --color-turquoise-400: var(--turquoise-400);
+  --color-turquoise-500: var(--turquoise-500);
+  --color-turquoise-600: var(--turquoise-600);
+  --color-turquoise-700: var(--turquoise-700);
+  --color-turquoise-800: var(--turquoise-800);
+  --color-turquoise-900: var(--turquoise-900);
+  --color-interactive-primary-hover: var(--interactive-primary-hover);
+  --color-interactive-primary-active: var(--interactive-primary-active);
+  --color-interactive-primary-disabled: var(--interactive-primary-disabled);
+  --color-interactive-secondary-hover: var(--interactive-secondary-hover);
+  --color-interactive-secondary-active: var(--interactive-secondary-active);
+  --color-interactive-secondary-disabled: var(--interactive-secondary-disabled);
+  --color-interactive-ghost-hover: var(--interactive-ghost-hover);
+  --color-interactive-ghost-active: var(--interactive-ghost-active);
+  --color-interactive-ghost-disabled: var(--interactive-ghost-disabled);
+  --color-interactive-danger-hover: var(--interactive-danger-hover);
+  --color-interactive-danger-active: var(--interactive-danger-active);
+  --color-interactive-danger-disabled: var(--interactive-danger-disabled);
+  --color-interactive-slate-hover: var(--interactive-slate-hover);
+  --color-interactive-slate-active: var(--interactive-slate-active);
+  --color-interactive-slate-disabled: var(--interactive-slate-disabled);
+  --color-status-success-bg: var(--status-success-bg);
+  --color-status-success: var(--status-success);
+  --color-status-success-text: var(--status-success-text);
+  --color-status-warning-bg: var(--status-warning-bg);
+  --color-status-warning: var(--status-warning);
+  --color-status-warning-text: var(--status-warning-text);
+  --color-status-error-bg: var(--status-error-bg);
+  --color-status-error: var(--status-error);
+  --color-status-error-text: var(--status-error-text);
+  --color-status-info-bg: var(--status-info-bg);
+  --color-status-info: var(--status-info);
+  --color-status-info-text: var(--status-info-text);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --tracking-tighter: var(--tracking-tighter);
+  --tracking-tight: var(--tracking-tight);
+  --tracking-normal: var(--tracking-normal);
+  --tracking-wide: var(--tracking-wide);
+  --tracking-wider: var(--tracking-wider);
+  --tracking-display: var(--tracking-display);
+  --tracking-heading: var(--tracking-heading);
+  --tracking-caption: var(--tracking-caption);
+
+  --font-weight-light: var(--font-light);
+  --font-weight-regular: var(--font-regular);
+  --font-weight-medium: var(--font-medium);
+  --font-weight-semibold: var(--font-semibold);
+  --font-weight-bold: var(--font-bold);
+  --font-weight-extrabold: var(--font-extrabold);
+
+  --leading-none: var(--leading-none);
+  --leading-display: var(--leading-display);
+  --leading-tight: var(--leading-tight);
+  --leading-snug: var(--leading-snug);
+  --leading-normal: var(--leading-normal);
+  --leading-relaxed: var(--leading-relaxed);
+  --leading-loose: var(--leading-loose);
+  --leading-heading-2: var(--leading-heading-2);
+  --leading-heading-3: var(--leading-heading-3);
+  --leading-body: var(--leading-body);
+
+  --text-xxs: var(--text-xxs);
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-base: var(--text-base);
+  --text-md: var(--text-md);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+  --text-3xl: var(--text-3xl);
+  --text-4xl: var(--text-4xl);
+  --text-5xl: var(--text-5xl);
+  --text-6xl: var(--text-6xl);
+  --text-7xl: var(--text-7xl);
+  --text-8xl: var(--text-8xl);
+  --text-30: var(--text-30);
+  --text-36: var(--text-36);
+  --text-60: var(--text-60);
+  --text-72: var(--text-72);
+
+  --radius-none: var(--radius-none);
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-3xl: var(--radius-3xl);
+  --radius-full: var(--radius-full);
+  --radius-button: calc(var(--radius-xl) + 999px);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+  --shadow-inner: var(--shadow-inner);
+  --shadow-turquoise: var(--shadow-turquoise);
+
+  --animate-fade-in: fade-in 0.3s ease-in-out;
+  --animate-overlay-in: overlay-in 0.2s ease-out;
+  --animate-overlay-out: overlay-out 0.2s ease-in;
+  --animate-dialog-overlay-in: dialog-overlay-in 0.2s ease-out;
+  --animate-dialog-overlay-out: dialog-overlay-out 0.15s ease-in;
+  --animate-dialog-content-in: dialog-content-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-dialog-content-out: dialog-content-out 0.15s ease-in;
+  --animate-popover-content-in: popover-content-in 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-popover-content-out: popover-content-out 0.1s ease-in;
+  --animate-slide-in-from-right: slide-in-from-right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-out-to-right: slide-out-to-right 0.2s ease-in;
+  --animate-slide-in-from-left: slide-in-from-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-out-to-left: slide-out-to-left 0.2s ease-in;
+  --animate-slide-in-from-top: slide-in-from-top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-out-to-top: slide-out-to-top 0.2s ease-in;
+  --animate-slide-in-from-bottom: slide-in-from-bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-out-to-bottom: slide-out-to-bottom 0.2s ease-in;
+  --animate-dots-pulse: dots-pulse 1.4s ease-in-out infinite both;
+
+  /*
+   * Generic collapse animations.
+   *
+   * Reusable for any collapsible-style primitive (Accordion, Disclosure,
+   * Drawer, etc.). The consumer is responsible for setting
+   * `--collapse-content-height` to the measured content height — typically
+   * by bridging it from a primitive-specific variable, e.g.:
+   *
+   *   style={{ "--collapse-content-height": "var(--radix-accordion-content-height)" }}
+   */
+  --animate-collapse-down: collapse-down 0.2s ease-out;
+  --animate-collapse-up: collapse-up 0.2s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes overlay-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes overlay-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes dialog-overlay-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes dialog-overlay-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* NOTE: these animate scale + opacity only. The panel's -50%/-50%
+     centering is owned by Tailwind's `translate` property on the
+     content element, so keyframes must not also drive `transform:
+     translate(...)` or the two stack and fling the panel off-center. */
+  @keyframes dialog-content-in {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes dialog-content-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  /* Open/close motion for any anchored floating panel (DropdownMenu,
+     Popover, Tooltip, etc.). Just a small fade + scale — translation
+     comes from popper positioning, not the keyframes. */
+  @keyframes popover-content-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes popover-content-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  /* Generic edge-anchored slide animations.
+     Reusable for any panel anchored to a viewport edge (Sheet, Drawer,
+     Toast, etc.). Keyframes only drive transform + opacity — the panel's
+     position (top/right/bottom/left) is owned by its layout classes. */
+  @keyframes slide-in-from-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-out-to-right {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes slide-in-from-left {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-out-to-left {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes slide-in-from-top {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-out-to-top {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+  }
+
+  @keyframes slide-in-from-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-out-to-bottom {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes dots-pulse {
+    0%,
+    80%,
+    100% {
+      opacity: 0.3;
+      transform: scale(0.75);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes collapse-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--collapse-content-height);
+    }
+  }
+
+  @keyframes collapse-up {
+    from {
+      height: var(--collapse-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}

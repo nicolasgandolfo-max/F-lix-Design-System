@@ -1,0 +1,35 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Felix UI/Contributing" />
+
+# Contributing
+
+Contributions to the monorepo are welcome from Felix product teams. The canonical guidelines live in the repository root:
+
+- **`CONTRIBUTING.md`** — workflow, PR checklist, and code conventions
+- **`docs/VERSIONING.md`** — Changesets and semver for `@felix/ui`
+
+## Quick start (monorepo)
+
+```bash
+npm install
+npm run storybook
+```
+
+Implement changes under **`packages/ui`** and stories under **`storybook/stories`**. Import public APIs from **`@felix/ui`** in stories, not deep relative paths into `packages/ui/src`.
+
+## New component checklist
+
+1. **Spec** — For non-trivial components, fill out **`.github/COMPONENT_SPEC_TEMPLATE.md`** before coding (API, states, a11y, keyboard).
+2. **Implementation** — `forwardRef`, `data-slot`, `cn()`, CVA for variants, native props extended and spread with `{...rest}`.
+3. **Stories** — `tags: ['autodocs']`, ArgTypes with descriptions and controls, default + variants + dark mode where relevant.
+4. **Tests** — Vitest + Testing Library + jest-axe where applicable.
+5. **Release** — If the change should be published, add a changeset: `npm run changeset` at the repo root and commit the generated `.changeset/*.md` with your PR.
+
+## Pull requests
+
+GitHub shows **`.github/pull_request_template.md`** when you open a PR—complete the sections that apply.
+
+## Questions
+
+Contact the Felix design system team or open an issue in the repository.

@@ -1,0 +1,64 @@
+---
+description: React component patterns — forwardRef, CVA, data-slot, Radix, props
+globs:
+  - packages/ui/src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Component architecture (felix-ui)
+
+## Rules
+
+1. **`forwardRef` always** — Every component uses `React.forwardRef`. No exceptions.
+2. **Extend native props** — The props interface extends the correct underlying HTML type (`React.ComponentProps<"button">`, `React.HTMLAttributes<HTMLDivElement>`, etc.). For Radix-based components, extend the corresponding primitive’s props type.
+3. **`...rest` last** — Unhandled props must spread onto the underlying DOM/component **after** computed props. Order: computed props, then `{...rest}`.
+4. **`className` is always merged** — Use `cn(baseClasses, className)`; never replace consumer `className`.
+5. **CVA for variants** — Any prop that drives visual variants uses `class-variance-authority`. Avoid ad-hoc string conditionals for styling.
+6. **`data-slot` on the root** — Every component (and each compound sub-part) sets `data-slot="kebab-name"` on its root element for tests, debugging, and targeted CSS.
+7. **`"use client"`** — Add at the top when the file uses hooks (`useState`, `useEffect`, `useContext`) or needs client-only event handlers. Omit for purely presentational server-safe components.
+8. **Compound components** — Expose parts as `Component.SubPart`. Use React context to share state between parts when needed.
+9. **`asChild` with Radix Slot** — HTML-wrapper components that should merge props into a child should support `asChild` via `@radix-ui/react-slot`.
+10. **Controlled + uncontrolled** — Components with internal value state support both: uncontrolled by default; if the consumer passes `value` + `onValueChange` (or the pair your API uses), the component is controlled.
+11. **No hardcoded `stopPropagation`** — If interception is needed, expose it via props so the consumer decides.
+12. **JSDoc on props** — Each prop in the public interface has at least a one-line JSDoc comment so Storybook autodocs can document it.
+
+## Example shape
+
+```tsx
+"use client"
+
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "../../lib/utils"
+
+const componentVariants = cva("base-classes", {
+  variants: {
+    variant: { default: "..." },
+  },
+  defaultVariants: { variant: "default" },
+})
+
+interface ComponentProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof componentVariants> {
+  /** What this prop does */
+  customProp?: string
+}
+
+const Component = React.forwardRef<HTMLDivElement, ComponentProps>(
+  ({ variant, customProp, className, ...rest }, ref) => (
+    <div
+      ref={ref}
+      data-slot="component"
+      className={cn(componentVariants({ variant }), className)}
+      {...rest}
+    />
+  ),
+)
+Component.displayName = "Component"
+
+export { Component, componentVariants }
+export type { ComponentProps }
+```
+
+Adjust the `cn` import depth if the file is not one level under `components/` (e.g. nested folders).

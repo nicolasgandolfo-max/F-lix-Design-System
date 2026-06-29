@@ -1,0 +1,19 @@
+---
+description: Storybook — autodocs, argTypes, stories layout, @felix/ui imports
+globs:
+  - storybook/stories/**/*.stories.tsx
+alwaysApply: false
+---
+
+# Storybook (felix-ui)
+
+## Rules
+
+1. **`autodocs` on meta** — Every story file should include `tags: ['autodocs']` in the default export meta.
+2. **Complete `argTypes`** — For each component prop surfaced in controls, provide `description`, appropriate `control` type, and `defaultValue` / table defaults where applicable.
+3. **One story per meaningful state** — Cover Default, each main variant, and important states (disabled, error, loading). Add dark-mode coverage when the component is theme-sensitive.
+4. **Dark mode story** — Include a story that wraps the component in a container with the `dark` class (or project dark wrapper) to validate dark theme.
+5. **Mobile / `PhoneFrame`** — For mobile-oriented UI, include a story using the Storybook `PhoneFrame` decorator when available.
+6. **Story names in English** — Use PascalCase for story `name` exports / titles as per project convention.
+7. **No business logic in stories** — Stories demonstrate the component; use `@storybook/addon-interactions` for scripted interactions instead of embedding app workflows.
+8. **Import from `@felix/ui`** — Import components from the package name (`@felix/ui`), not deep relative paths into `packages/ui/src`.

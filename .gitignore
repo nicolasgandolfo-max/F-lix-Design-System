@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production
+dist/
+build/
+
+# Testing
+coverage/
+
+# Lost Pixel — only baseline is committed; current/diff are ephemeral
+storybook/.lostpixel/current/
+storybook/.lostpixel/difference/
+
+# Storybook
+storybook-static/
+.storybook/tailwind.generated.css
+
+# Misc
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
+.env.production.local
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+*.tsbuildinfo
+packages/ui/dist/bundle-analysis.html
+.playwright-mcp/
+
+# design-system site build output
+apps/*/dist

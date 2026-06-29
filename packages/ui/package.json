@@ -1,0 +1,363 @@
+{
+  "name": "@felix/ui",
+  "version": "1.1.7",
+  "description": "Official React component library for Felix, built on shadcn/ui",
+  "license": "MIT",
+  "author": "Felix",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./theme.css": "./dist/theme.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./fonts/*": "./fonts/*",
+    "./assets/*": "./assets/*",
+    "./preset": {
+      "types": "./dist/preset.d.ts",
+      "import": "./dist/preset.js",
+      "require": "./dist/preset.cjs"
+    },
+    "./tokens": {
+      "types": "./dist/tokens/index.d.ts",
+      "import": "./dist/tokens/index.js",
+      "require": "./dist/tokens/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "fonts",
+    "assets",
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://us-npm.pkg.dev/felix-shared-services/felix-nodejs-libs/",
+    "access": "restricted"
+  },
+  "engines": {
+    "node": "^20 || ^22 || ^24",
+    "npm": "^10 || ^11"
+  },
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build:tokens": "tsx scripts/build-tokens.ts",
+    "build": "npm run build:tokens && rollup -c",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "size": "size-limit",
+    "size:why": "size-limit --why",
+    "check:package": "publint .",
+    "prepublishOnly": "npm run build && npm run check:package"
+  },
+  "size-limit": [
+    {
+      "name": "Full bundle (import *)",
+      "path": "dist/index.js",
+      "import": "*",
+      "limit": "115 kB"
+    },
+    {
+      "name": "Avatar only",
+      "path": "dist/index.js",
+      "import": "{ Avatar, AvatarImage, AvatarFallback }",
+      "limit": "12 kB"
+    },
+    {
+      "name": "Button only",
+      "path": "dist/index.js",
+      "import": "{ Button }",
+      "limit": "10 kB"
+    },
+    {
+      "name": "Text only",
+      "path": "dist/index.js",
+      "import": "{ Text }",
+      "limit": "18 kB"
+    },
+    {
+      "name": "Logo only",
+      "path": "dist/index.js",
+      "import": "{ Logo }",
+      "limit": "12 kB"
+    },
+    {
+      "name": "Stepper only",
+      "path": "dist/index.js",
+      "import": "{ Stepper }",
+      "limit": "15 kB"
+    },
+    {
+      "name": "Alert only",
+      "path": "dist/index.js",
+      "import": "{ Alert, AlertTitle, AlertDescription }",
+      "limit": "30 kB"
+    },
+    {
+      "name": "Accordion only",
+      "path": "dist/index.js",
+      "import": "{ Accordion, AccordionItem, AccordionTrigger, AccordionContent }",
+      "limit": "40 kB"
+    },
+    {
+      "name": "ChoiceCard only",
+      "path": "dist/index.js",
+      "import": "{ ChoiceCard, ChoiceCardGroup }",
+      "limit": "19 kB"
+    },
+    {
+      "name": "Collapse only",
+      "path": "dist/index.js",
+      "import": "{ Collapse, CollapseTrigger, CollapseContent }",
+      "limit": "20 kB"
+    },
+    {
+      "name": "DatePicker only",
+      "path": "dist/index.js",
+      "import": "{ DatePicker }",
+      "limit": "53 kB"
+    },
+    {
+      "name": "Checkbox only",
+      "path": "dist/index.js",
+      "import": "{ Checkbox }",
+      "limit": "14 kB"
+    },
+    {
+      "name": "Dialog only",
+      "path": "dist/index.js",
+      "import": "{ Dialog, DialogTrigger, DialogContent, DialogHeader, DialogBody, DialogFooter, DialogTitle, DialogDescription, DialogClose }",
+      "limit": "50 kB"
+    },
+    {
+      "name": "Popover only",
+      "path": "dist/index.js",
+      "import": "{ Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverFooter, PopoverTitle, PopoverDescription, PopoverClose }",
+      "limit": "30 kB"
+    },
+    {
+      "name": "Drawer only",
+      "path": "dist/index.js",
+      "import": "{ Drawer, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription, DrawerTrigger, DrawerClose }",
+      "limit": "28 kB"
+    },
+    {
+      "name": "Sheet only",
+      "path": "dist/index.js",
+      "import": "{ Sheet, SheetTrigger, SheetContent, SheetHeader, SheetBody, SheetFooter, SheetTitle, SheetDescription, SheetClose }",
+      "limit": "30 kB"
+    },
+    {
+      "name": "DropdownMenu only",
+      "path": "dist/index.js",
+      "import": "{ DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent }",
+      "limit": "35 kB"
+    },
+    {
+      "name": "Toast only",
+      "path": "dist/index.js",
+      "import": "{ Toaster, toast }",
+      "limit": "20 kB"
+    },
+    {
+      "name": "Card only",
+      "path": "dist/index.js",
+      "import": "{ Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }",
+      "limit": "9 kB"
+    },
+    {
+      "name": "Progress only",
+      "path": "dist/index.js",
+      "import": "{ Progress }",
+      "limit": "12 kB"
+    },
+    {
+      "name": "Radio only",
+      "path": "dist/index.js",
+      "import": "{ RadioGroup, RadioGroupItem }",
+      "limit": "14 kB"
+    },
+    {
+      "name": "Separator only",
+      "path": "dist/index.js",
+      "import": "{ Separator }",
+      "limit": "10 kB"
+    },
+    {
+      "name": "Slider only",
+      "path": "dist/index.js",
+      "import": "{ Slider }",
+      "limit": "14 kB"
+    },
+    {
+      "name": "Spinner only",
+      "path": "dist/index.js",
+      "import": "{ Spinner }",
+      "limit": "9 kB"
+    },
+    {
+      "name": "Skeleton only",
+      "path": "dist/index.js",
+      "import": "{ Skeleton }",
+      "limit": "9 kB"
+    },
+    {
+      "name": "Switch only",
+      "path": "dist/index.js",
+      "import": "{ Switch }",
+      "limit": "12 kB"
+    },
+    {
+      "name": "Dots only",
+      "path": "dist/index.js",
+      "import": "{ Dots }",
+      "limit": "9 kB"
+    },
+    {
+      "name": "CoinLoader only",
+      "path": "dist/index.js",
+      "import": "{ CoinLoader }",
+      "limit": "9 kB"
+    },
+    {
+      "name": "Tooltip only",
+      "path": "dist/index.js",
+      "import": "{ Tooltip, TooltipProvider, TooltipTrigger, TooltipContent }",
+      "limit": "25 kB"
+    },
+    {
+      "name": "HoverCard only",
+      "path": "dist/index.js",
+      "import": "{ HoverCard, HoverCardTrigger, HoverCardContent, HoverCardArrow, HoverCardHeader, HoverCardBody, HoverCardFooter, HoverCardTitle, HoverCardDescription }",
+      "limit": "30 kB"
+    },
+    {
+      "name": "Breadcrumb only",
+      "path": "dist/index.js",
+      "import": "{ Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis }",
+      "limit": "12 kB"
+    },
+    {
+      "name": "Pagination only",
+      "path": "dist/index.js",
+      "import": "{ Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis }",
+      "limit": "12 kB"
+    },
+    {
+      "name": "Select only",
+      "path": "dist/index.js",
+      "import": "{ Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator }",
+      "limit": "35 kB"
+    },
+    {
+      "name": "Table only",
+      "path": "dist/index.js",
+      "import": "{ Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption }",
+      "limit": "12 kB"
+    },
+    {
+      "name": "Tabs only",
+      "path": "dist/index.js",
+      "import": "{ Tabs, TabsList, TabsTrigger, TabsContent }",
+      "limit": "14 kB"
+    },
+    {
+      "name": "NavigationMenu only",
+      "path": "dist/index.js",
+      "import": "{ NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuIndicator, NavigationMenuViewport }",
+      "limit": "30 kB"
+    },
+    {
+      "name": "SidebarFooter only",
+      "path": "dist/index.js",
+      "import": "{ SidebarFooter }",
+      "limit": "10 kB"
+    },
+    {
+      "name": "Sidebar only",
+      "path": "dist/index.js",
+      "import": "{ Sidebar, SidebarHeader, SidebarBody, SidebarSection, SidebarSectionTitle, SidebarNavItem, SidebarFooter }",
+      "limit": "15 kB"
+    }
+  ],
+  "peerDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-avatar": "^1.1.11",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-hover-card": "^1.1.15",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-progress": "^1.1.8",
+    "@radix-ui/react-radio-group": "^1.3.8",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-separator": "^1.1.8",
+    "@radix-ui/react-slider": "^1.3.6",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "react-day-picker": "^9.14.0",
+    "sonner": "2.0.7",
+    "tailwind-merge": "^3.4.0",
+    "vaul": "^1.1.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@size-limit/esbuild": "^12.0.1",
+    "@size-limit/file": "^12.0.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest-axe": "^3.5.9",
+    "@types/node": "^20.17.10",
+    "@types/react": "^19.0.14",
+    "@types/react-dom": "^19.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "@vitest/coverage-v8": "^2.1.9",
+    "eslint": "^9.20.0",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "jest-axe": "^10.0.0",
+    "jsdom": "^29.0.1",
+    "publint": "^0.3.18",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rollup": "^4.31.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-visualizer": "^7.0.1",
+    "rollup-preserve-directives": "^1.1.1",
+    "size-limit": "^12.0.1",
+    "tailwindcss": "^4.0.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.19",
+    "vitest": "^2.1.8"
+  }
+}

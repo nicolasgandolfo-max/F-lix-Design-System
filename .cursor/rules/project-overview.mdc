@@ -1,0 +1,46 @@
+---
+description: felix-ui stack, architecture, and folder taxonomy (always-on context)
+alwaysApply: true
+---
+
+# felix-ui — Project overview
+
+## What this is
+
+**felix-ui** is an enterprise design system: an internal React component library for consistent UI across products.
+
+## Stack
+
+- **React** 19, **TypeScript** 5.7 (strict)
+- **Tailwind CSS** v4
+- **Rollup** — dual **ESM + CJS** build
+- **Storybook** 8.5
+- **Radix UI** (`@radix-ui/react-slot` for `Button.asChild`, etc.) where needed
+
+## Zero-CSS architecture
+
+Components use Tailwind class names as strings in TSX. Consumers compile CSS (Tailwind); the library does not ship a separate CSS bundle that components depend on at author time beyond tokens/theme conventions.
+
+## Folder structure
+
+Components live under `packages/ui/src/components/`:
+
+- `Atoms/` — current public components (**Button**, **Text**)
+- `Molecules/` / `Organisms/` — reserved for future work; may be empty
+
+## Classification
+
+- **Atom** — Smallest visual unit; little or no complex state. Current examples: **Button**, **Text**.
+- **Molecule** / **Organism** — For future compound or complex UI when the design system expands.
+
+## Design tokens
+
+Single source of truth: `packages/ui/src/tokens/tokens.ts`.
+
+## Primary consumer
+
+**payments-ui** — Next.js 16, Node 24.
+
+## Work branch (when relevant)
+
+`feature/tokens-and-docs`

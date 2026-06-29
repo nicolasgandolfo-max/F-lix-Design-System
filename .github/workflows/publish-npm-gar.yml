@@ -1,0 +1,117 @@
+name: Release @felix/ui
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/ui/package.json"
+      - "packages/ui/CHANGELOG.md"
+      - ".changeset/**"
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write # devops-build-and-push-image nested job requests this
+
+concurrency:
+  group: release-felix-ui
+  cancel-in-progress: false
+
+jobs:
+  check-version:
+    name: Detect new version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.pkg.outputs.version }}
+      tag_exists: ${{ steps.tag.outputs.exists }}
+      should_publish: ${{ steps.decide.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read package version
+        id: pkg
+        run: |
+          version=$(node -p "require('./packages/ui/package.json').version")
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Package version: ${version}"
+
+      - name: Check if tag already exists
+        id: tag
+        run: |
+          tag="@felix/ui-v${{ steps.pkg.outputs.version }}"
+          if git rev-parse "refs/tags/${tag}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag ${tag} already exists — skipping publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Decide
+        id: decide
+        run: |
+          if [[ "${{ steps.tag.outputs.exists }}" == "false" ]]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  publish:
+    name: Publish to GAR
+    needs: check-version
+    if: needs.check-version.outputs.should_publish == 'true'
+    uses: Felix-Pago/felix-pipelines-wf/.github/workflows/engops-npm-publish-gar.yml@main
+    with:
+      gcp_project_id: felix-shared-services
+      gar_location: us
+      gar_repository: felix-nodejs-libs
+      node_version: "24"
+      working_directory: "."
+      npm_install_command: npm ci
+      publish_command: npm publish -w @felix/ui
+      include_npm_scope: true
+      npm_scope: "@felix"
+    secrets:
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ secrets.NPM_PUBLISH_SERVICE_ACCOUNT }}
+
+  build-storybook-image:
+    name: Build Storybook Image
+    needs: check-version
+    if: needs.check-version.outputs.should_publish == 'true'
+    uses: Felix-Pago/felix-pipelines-wf/.github/workflows/devops-build-and-push-image.yml@main
+    with:
+      environment: dev
+      deployment_name: storybook-felix-ui
+      tags: "${{ needs.check-version.outputs.version }}"
+      context: .
+      file: storybook/Dockerfile
+    secrets: inherit
+
+  deploy-storybook:
+    name: Deploy Storybook
+    needs: [check-version, build-storybook-image]
+    uses: Felix-Pago/felix-pipelines-wf/.github/workflows/devops-deploy-to-gke.yml@main
+    with:
+      environment: dev
+      deployment_name: storybook-felix-ui
+      image_tag: "${{ needs.check-version.outputs.version }}"
+      helm_values_location: .deploy/dev/values.yaml
+      helm_extra_args: "--set pod.container[1].tag=v7.7.1"
+    secrets: inherit
+
+  tag:
+    name: Tag release
+    needs: [check-version, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create git tag
+        run: |
+          tag="@felix/ui-v${{ needs.check-version.outputs.version }}"
+          git tag "${tag}"
+          git push origin "${tag}"

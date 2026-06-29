@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "@felix/ui/fonts.css";
+@import "@felix/ui/theme.css";
+
+/* Scan library for Tailwind classes (hoisted to root node_modules) */
+@source "../../node_modules/@felix/ui/src/**/*.tsx";
+@source "../../node_modules/@felix/ui/src/**/*.ts";
+
+/* Storybook story sources */
+@source "../stories/**/*.tsx";
+@source "../stories/**/*.ts";
+
+/* Storybook docs helpers (TokenTable, AnimationPreview, etc.) */
+@source "./**/*.tsx";
+@source "./**/*.ts";
+
