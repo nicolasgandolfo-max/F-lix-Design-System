@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run build -w @felix/ui && npm run build -w @felix/design-system-site",
-  "outputDirectory": "apps/design-system/dist",
+  "buildCommand": "npm run build -w @felix/ui && npm run build -w @felix/design-system-site && rm -rf dist && cp -R apps/design-system/dist dist",
+  "outputDirectory": "dist",
   "installCommand": "npm install"
 }
