@@ -1,5 +1,7 @@
 import { Fragment } from "react";
-import { NAV } from "./data";
+import { NavLink } from "react-router-dom";
+import { PuzzlePieceIcon } from "@phosphor-icons/react";
+import { NAV, INVENTORY, slugify } from "./data";
 import { useLang, useTr } from "./i18n";
 
 function Logo() {
@@ -17,48 +19,66 @@ function Logo() {
   );
 }
 
-export function Sidebar({
-  active,
-  onNavigate,
-  open,
-}: {
-  active: string;
-  onNavigate: () => void;
-  open: boolean;
-}) {
+const navClass = ({ isActive }: { isActive: boolean }) => (isActive ? "active" : undefined);
+
+export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: boolean }) {
   const { lang, setLang } = useLang();
   const tr = useTr();
   return (
     <aside className={"sidebar" + (open ? " open" : "")} id="sidebar">
-      <div className="brand">
+      <NavLink to="/" className="brand" onClick={onNavigate} aria-label="Felix — inicio">
         <Logo />
         <span className="sub">{tr("Sistema de diseño", "Design System")}</span>
         <span className="ver">v1.0.0 · alpha</span>
-      </div>
+      </NavLink>
+
       <nav className="nav" aria-label={tr("Secciones", "Sections")}>
         {NAV.map((g) => (
           <Fragment key={g.group.en}>
             <span className="nav-group">{tr(g.group.es, g.group.en)}</span>
             {g.items.map((it) => {
               const Icon = it.icon;
-              const isActive = active === it.id;
               return (
-                <a
-                  key={it.id}
-                  href={`#${it.id}`}
-                  className={(isActive ? "active" : "") + (it.soon ? " soon" : "")}
-                  aria-current={isActive ? "true" : undefined}
-                  onClick={onNavigate}
-                >
-                  <Icon weight={isActive ? "fill" : "regular"} />
-                  <span>{tr(it.es, it.en)}</span>
-                  {it.tag && <span className="navtag">{tr(it.tag.es, it.tag.en)}</span>}
-                </a>
+                <NavLink key={it.id} to={it.path} end={it.end} onClick={onNavigate} className={navClass}>
+                  {({ isActive }) => (
+                    <>
+                      <Icon weight={isActive ? "fill" : "regular"} />
+                      <span>{tr(it.es, it.en)}</span>
+                    </>
+                  )}
+                </NavLink>
               );
             })}
           </Fragment>
         ))}
+
+        {/* Componentes — full section with every component linked */}
+        <span className="nav-group">{tr("Componentes", "Components")}</span>
+        <NavLink to="/componentes" end onClick={onNavigate} className={navClass}>
+          {({ isActive }) => (
+            <>
+              <PuzzlePieceIcon weight={isActive ? "fill" : "regular"} />
+              <span>{tr("Visión general", "Overview")}</span>
+            </>
+          )}
+        </NavLink>
+        {INVENTORY.map((group) => (
+          <Fragment key={group.group}>
+            <span className="nav-subgroup">{group.group}</span>
+            {group.items.map((name) => (
+              <NavLink
+                key={name}
+                to={`/componentes/${slugify(name)}`}
+                onClick={onNavigate}
+                className={({ isActive }) => "sub" + (isActive ? " active" : "")}
+              >
+                <span>{name}</span>
+              </NavLink>
+            ))}
+          </Fragment>
+        ))}
       </nav>
+
       <div className="side-foot">
         <div className="lang" role="group" aria-label={tr("Idioma", "Language")}>
           <button aria-pressed={lang === "es"} onClick={() => setLang("es")}>

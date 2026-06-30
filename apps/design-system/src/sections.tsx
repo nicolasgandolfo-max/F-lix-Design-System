@@ -1,18 +1,6 @@
 import { useState } from "react";
-import {
-  Button,
-  Badge,
-  Alert,
-  AlertTitle,
-  AlertDescription,
-  Input,
-  Switch,
-  Checkbox,
-  Progress,
-  Card,
-  CardContent,
-  Text,
-} from "@felix/ui";
+import { Link } from "react-router-dom";
+import { Button } from "@felix/ui";
 import {
   StarIcon,
   PaletteIcon,
@@ -36,8 +24,11 @@ import {
   BankIcon,
   ReceiptIcon,
   CheckIcon,
+  DownloadSimpleIcon,
+  CopyIcon,
   type Icon,
 } from "@phosphor-icons/react";
+import designMd from "../../../DESIGN.md?raw";
 import { useTr } from "./i18n";
 import {
   BRAND_COLORS,
@@ -46,9 +37,9 @@ import {
   RADIUS_TOKENS,
   SPACE_TOKENS,
   SHADOW_TOKENS,
-  INVENTORY,
   type Swatch,
 } from "./data";
+import { ILLUSTRATIONS, ILLUSTRATION_COUNT } from "./illustrations";
 
 /* ─────────────────────────── Hero / Overview ─────────────────────────── */
 export function Hero() {
@@ -70,10 +61,10 @@ export function Hero() {
       </p>
       <div className="cluster">
         <Button variant="primary" asChild>
-          <a href="#components">{tr("Ver componentes", "Explore components")}</a>
+          <Link to="/componentes">{tr("Ver componentes", "Explore components")}</Link>
         </Button>
         <Button variant="line" asChild>
-          <a href="#tokens">{tr("Design tokens", "Design tokens")}</a>
+          <Link to="/tokens">{tr("Design tokens", "Design tokens")}</Link>
         </Button>
       </div>
       <div className="meta">
@@ -99,16 +90,16 @@ export function Hero() {
 }
 
 /* ──────────────────────────── Start grid ─────────────────────────────── */
-function Tile({ icon: I, href, title, desc, go }: { icon: Icon; href: string; title: string; desc: string; go: string }) {
+function Tile({ icon: I, to, title, desc, go }: { icon: Icon; to: string; title: string; desc: string; go: string }) {
   return (
-    <a className="tile" href={href}>
+    <Link className="tile" to={to}>
       <span className="ic">
         <I />
       </span>
       <b>{title}</b>
       <span className="d">{desc}</span>
       <span className="go">{go} →</span>
-    </a>
+    </Link>
   );
 }
 export function StartGrid() {
@@ -119,14 +110,24 @@ export function StartGrid() {
         <span>{tr("Por dónde empezar", "Where to start")}</span>
       </div>
       <div className="grid">
-        <Tile icon={StarIcon} href="#principles" title={tr("Principios", "Principles")} desc={tr("Las cuatro ideas que guían cada decisión de diseño.", "The four ideas that guide every design decision.")} go={tr("Leer", "Read")} />
-        <Tile icon={PaletteIcon} href="#colors" title={tr("Colores", "Colors")} desc={tr("Turquesa, slate y una base neutra cálida. Paleta pequeña a propósito.", "Turquoise, slate, and a warm neutral base. A deliberately small palette.")} go={tr("Ver paleta", "View palette")} />
-        <Tile icon={TextAaIcon} href="#typography" title={tr("Tipografía", "Typography")} desc={tr("Plain para los momentos de impacto, Saans para todo lo demás.", "Plain for moments of impact, Saans for everything else.")} go={tr("Ver escala", "View scale")} />
-        <Tile icon={PuzzlePieceIcon} href="#components" title={tr("Componentes", "Components")} desc={tr("43 piezas en React, construidas sobre Radix y accesibles por defecto.", "43 React pieces, built on Radix and accessible by default.")} go={tr("Explorar", "Explore")} />
-        <Tile icon={CubeIcon} href="#tokens" title="Tokens" desc={tr("Variables CSS y Tailwind. Una sola fuente de verdad para light y dark.", "CSS & Tailwind variables. One source of truth for light and dark.")} go={tr("Ver tokens", "View tokens")} />
-        <Tile icon={PencilSimpleIcon} href="#editorial" title={tr("Voz y copy", "Voice & copy")} desc={tr("Español primero, tú siempre. Claro, cálido, sin jerga.", "Spanish-first, informal tú always. Clear, warm, jargon-free.")} go={tr("Leer guía", "Read guide")} />
+        <Tile icon={StarIcon} to="/principios" title={tr("Principios", "Principles")} desc={tr("Las cuatro ideas que guían cada decisión de diseño.", "The four ideas that guide every design decision.")} go={tr("Leer", "Read")} />
+        <Tile icon={PaletteIcon} to="/colores" title={tr("Colores", "Colors")} desc={tr("Turquesa, slate y una base neutra cálida. Paleta pequeña a propósito.", "Turquoise, slate, and a warm neutral base. A deliberately small palette.")} go={tr("Ver paleta", "View palette")} />
+        <Tile icon={TextAaIcon} to="/tipografia" title={tr("Tipografía", "Typography")} desc={tr("Plain para los momentos de impacto, Saans para todo lo demás.", "Plain for moments of impact, Saans for everything else.")} go={tr("Ver escala", "View scale")} />
+        <Tile icon={PuzzlePieceIcon} to="/componentes" title={tr("Componentes", "Components")} desc={tr("43 piezas en React, construidas sobre Radix y accesibles por defecto.", "43 React pieces, built on Radix and accessible by default.")} go={tr("Explorar", "Explore")} />
+        <Tile icon={CubeIcon} to="/tokens" title="Tokens" desc={tr("Variables CSS y Tailwind. Una sola fuente de verdad para light y dark.", "CSS & Tailwind variables. One source of truth for light and dark.")} go={tr("Ver tokens", "View tokens")} />
+        <Tile icon={PencilSimpleIcon} to="/editorial" title={tr("Voz y copy", "Voice & copy")} desc={tr("Español primero, tú siempre. Claro, cálido, sin jerga.", "Spanish-first, informal tú always. Clear, warm, jargon-free.")} go={tr("Leer guía", "Read guide")} />
       </div>
     </section>
+  );
+}
+
+/* ───────────────────────────── Overview page ─────────────────────────── */
+export function Overview() {
+  return (
+    <>
+      <Hero />
+      <StartGrid />
+    </>
   );
 }
 
@@ -222,18 +223,52 @@ export function Typography() {
 }
 
 /* ─────────────────────────── Illustrations ───────────────────────────── */
+const ILLUSTRATION_CATEGORY_LABELS: Record<string, { es: string; en: string }> = {
+  "Brand & Characters": { es: "Marca y personajes", en: "Brand & Characters" },
+  Hands: { es: "Manos", en: "Hands" },
+  "Money & Payments": { es: "Dinero y pagos", en: "Money & Payments" },
+  Communication: { es: "Comunicación", en: "Communication" },
+  "Status & Alerts": { es: "Estados y alertas", en: "Status & Alerts" },
+  "Navigation & Maps": { es: "Navegación y mapas", en: "Navigation & Maps" },
+  Other: { es: "Otras", en: "Other" },
+};
+
 export function Illustrations() {
   const tr = useTr();
   return (
     <section className="sec" id="illustrations">
       <div className="eyebrow"><span className="n">04</span><span>{tr("Ilustraciones", "Illustrations")}</span></div>
-      <h2 className="h2">{tr("Calidez con geometría", "Warmth through geometry")}</h2>
-      <p className="lead">{tr("Formas redondeadas, paleta de marca y un gesto humano. Las ilustraciones acompañan momentos de celebración y vacíos, nunca decoran de más.", "Rounded shapes, brand palette, and a human gesture. Illustrations accompany moments of celebration and empty states — never over-decorate.")}</p>
-      <div className="illus">
-        <div className="blob" style={{ background: "var(--light-sky)" }}><svg width="120" height="100" viewBox="0 0 120 100" fill="none"><circle cx="60" cy="46" r="30" fill="#2bf2f1" /><circle cx="60" cy="46" r="14" fill="#082422" /><rect x="30" y="80" width="60" height="10" rx="5" fill="#082422" /></svg></div>
-        <div className="blob" style={{ background: "var(--stone)" }}><svg width="120" height="100" viewBox="0 0 120 100" fill="none"><path d="M20 70 Q60 10 100 70" stroke="#082422" strokeWidth="9" fill="none" strokeLinecap="round" /><circle cx="100" cy="70" r="11" fill="#dcff00" stroke="#082422" strokeWidth="3" /></svg></div>
-        <div className="blob" style={{ background: "var(--slate)" }}><svg width="120" height="100" viewBox="0 0 120 100" fill="none"><rect x="34" y="28" width="52" height="44" rx="10" fill="#2bf2f1" /><path d="M44 50h32M60 38v24" stroke="#082422" strokeWidth="6" strokeLinecap="round" /></svg></div>
-      </div>
+      <h2 className="h2">{tr("La biblioteca de ilustraciones de Felix", "The Felix illustration library")}</h2>
+      <p className="lead">
+        {tr(
+          `Formas redondeadas, paleta de marca y un gesto humano para acompañar momentos de celebración, estados vacíos y onboarding. ${ILLUSTRATION_COUNT} ilustraciones — descargá el SVG para web y producto.`,
+          `Rounded shapes, brand palette, and a human gesture for moments of celebration, empty states, and onboarding. ${ILLUSTRATION_COUNT} illustrations — download the SVG for web and product use.`,
+        )}
+      </p>
+      {ILLUSTRATIONS.map((cat) => {
+        const label = ILLUSTRATION_CATEGORY_LABELS[cat.category] ?? { es: cat.category, en: cat.category };
+        return (
+          <div key={cat.category}>
+            <h3 className="h3">{tr(label.es, label.en)} · {cat.items.length}</h3>
+            <div className="illo-grid">
+              {cat.items.map((ill) => {
+                const src = `/illustrations/${encodeURIComponent(ill.file)}`;
+                return (
+                  <figure className="illo-card" key={ill.file}>
+                    <div className="illo-preview">
+                      <img src={src} alt={ill.name} loading="lazy" />
+                    </div>
+                    <figcaption className="illo-meta">
+                      <span className="illo-name" title={ill.name}>{ill.name}</span>
+                      <a className="illo-dl" href={src} download={ill.file}>{tr("SVG", "SVG")}</a>
+                    </figcaption>
+                  </figure>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </section>
   );
 }
@@ -249,110 +284,6 @@ export function Iconography() {
       <p className="lead">{tr("El sistema usa Phosphor Icons — duotone para estados en reposo, fill para activos. Nunca Lucide en producto. Trazo consistente, esquinas redondeadas.", "The system uses Phosphor Icons — duotone at rest, fill when active. Never Lucide in product. Consistent stroke, rounded corners.")}</p>
       <div className="icongrid">
         {icons.map((I, i) => <div className="ig" key={i}><I weight="duotone" /></div>)}
-      </div>
-    </section>
-  );
-}
-
-/* ──────────────────────────── Components ─────────────────────────────── */
-function ControlsDemo() {
-  const tr = useTr();
-  const [sw, setSw] = useState(true);
-  const [ck, setCk] = useState(true);
-  return (
-    <div className="cluster" style={{ gap: 26 }}>
-      <Switch checked={sw} onCheckedChange={setSw} aria-label={tr("Activar notificaciones", "Enable notifications")} />
-      <Checkbox checked={ck} onCheckedChange={(v) => setCk(v === true)} aria-label={tr("Acepto los términos", "I accept the terms")} />
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 220 }}>
-        <Progress value={62} aria-label={tr("Progreso del envío", "Transfer progress")} />
-        <Text variant="caption" style={{ color: "var(--fg-subtle)" }}>62%</Text>
-      </div>
-    </div>
-  );
-}
-export function Components() {
-  const tr = useTr();
-  return (
-    <section className="sec" id="components">
-      <div className="eyebrow"><span className="n">06</span><span>{tr("Componentes", "Components")}</span></div>
-      <h2 className="h2">{tr("43 piezas, una sola estética", "43 pieces, one aesthetic")}</h2>
-      <p className="lead">{tr("Construidas en React 19 sobre primitivas Radix. Pill en lo interactivo, redondeo suave en contenedores, foco turquesa siempre presente. Todo lo de abajo es @felix/ui real.", "Built in React 19 on Radix primitives. Pill on interactive elements, soft rounding on containers, turquoise focus always present. Everything below is real @felix/ui.")}</p>
-
-      <div className="panel">
-        <div className="ph">{tr("Botones — 5 variantes, 3 tamaños", "Buttons — 5 variants, 3 sizes")}</div>
-        <div className="cluster">
-          <Button variant="primary"><PaperPlaneTiltIcon />{tr("Enviar dinero", "Send money")}</Button>
-          <Button variant="secondary">{tr("Secundario", "Secondary")}</Button>
-          <Button variant="ghost">{tr("Ahora no", "Not now")}</Button>
-          <Button variant="line">{tr("Editar", "Edit")}</Button>
-          <Button variant="danger">{tr("Eliminar", "Delete")}</Button>
-        </div>
-        <div className="cluster" style={{ marginTop: 14 }}>
-          <Button size="sm">sm · 36</Button>
-          <Button size="md">md · 48</Button>
-          <Button size="lg">lg · 56</Button>
-        </div>
-      </div>
-
-      <div className="panel">
-        <div className="ph">{tr("Badges", "Badges")}</div>
-        <div className="cluster">
-          <Badge variant="default">{tr("Nuevo", "New")}</Badge>
-          <Badge variant="secondary">{tr("Promo", "Promo")}</Badge>
-          <Badge variant="destructive">{tr("Cancelado", "Cancelled")}</Badge>
-          <Badge variant="outline">{tr("Borrador", "Draft")}</Badge>
-          <Badge variant="ghost">{tr("Etiqueta", "Tag")}</Badge>
-          <Badge variant="dark">{tr("Beta", "Beta")}</Badge>
-        </div>
-      </div>
-
-      <div className="panel">
-        <div className="ph">{tr("Alerts — estados", "Alerts — status")}</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <Alert variant="success"><AlertTitle>{tr("Transferencia completada", "Transfer completed")}</AlertTitle><AlertDescription>{tr("María recibió $1,020.00 MXN.", "María received $1,020.00 MXN.")}</AlertDescription></Alert>
-          <Alert variant="warning"><AlertTitle>{tr("Envío en camino", "Transfer on its way")}</AlertTitle><AlertDescription>{tr("Llega en aproximadamente 30 minutos.", "Arrives in about 30 minutes.")}</AlertDescription></Alert>
-          <Alert variant="error"><AlertTitle>{tr("No pudimos procesar el pago", "We couldn't process the payment")}</AlertTitle><AlertDescription>{tr("Revisá tu método de pago e intentá de nuevo.", "Check your payment method and try again.")}</AlertDescription></Alert>
-        </div>
-      </div>
-
-      <div className="panel">
-        <div className="ph">{tr("Formularios y controles", "Forms & controls")}</div>
-        <div className="cluster" style={{ alignItems: "flex-start", gap: 32 }}>
-          <div style={{ maxWidth: 320, flex: "1 1 260px" }}>
-            <Input label={tr("Monto a enviar", "Amount to send")} description={tr("Comisión $0.00 — sin sorpresas.", "Fee $0.00 — no surprises.")} defaultValue="$60.00 USD" />
-          </div>
-          <ControlsDemo />
-        </div>
-      </div>
-
-      <div className="panel">
-        <div className="ph">{tr("Card de transferencia", "Transfer card")}</div>
-        <Card style={{ maxWidth: 320 }}>
-          <CardContent style={{ padding: 20 }}>
-            <Text variant="caption" style={{ color: "var(--fg-subtle)", display: "block", marginBottom: 4 }}>{tr("Recibe María", "María receives")}</Text>
-            <div className="disp" style={{ fontSize: "2.4rem", fontVariantNumeric: "tabular-nums" }}>
-              1,020.00<span style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 600, color: "var(--fg-subtle)", marginLeft: 6 }}>MXN</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: "var(--fg-muted)", marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--stone)" }}>
-              <span>{tr("Tipo de cambio", "Exchange rate")}</span><span style={{ fontFamily: "var(--font-mono)" }}>17.00</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: "var(--fg-muted)", marginTop: 10 }}>
-              <span>{tr("Comisión", "Fee")}</span><span style={{ fontFamily: "var(--font-mono)" }}>$0.00</span>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="panel">
-        <div className="ph">{tr("Inventario completo", "Full inventory")}</div>
-        <div className="inv">
-          {INVENTORY.map((g) => (
-            <div key={g.group} style={{ display: "contents" }}>
-              <div className="ih">{g.group} · {g.items.length}</div>
-              {g.items.map((c) => <span key={c}>{c}</span>)}
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -422,34 +353,86 @@ export function Editorial() {
   );
 }
 
-/* ────────────────────────── Markdown / MCP ───────────────────────────── */
-export function Markdown() {
+/* ──────────────────────────────── DESIGN.md ──────────────────────────── */
+export function DesignMd() {
   const tr = useTr();
-  return (
-    <section className="sec" id="markdown">
-      <div className="eyebrow"><span className="n">09</span><span>Markdown</span></div>
-      <h2 className="h2">{tr("El sistema como contrato legible", "The system as a readable contract")}</h2>
-      <div className="holder exp">
-        <span className="pill">{tr("Experimental", "Experimental")}</span>
-        <p>{tr("DESIGN.md describe toda la identidad en un formato que entienden tanto las personas como las herramientas de IA (Cursor, Claude Code, v0). Tokens, tipografía, reglas y voz en un solo archivo versionable.", "DESIGN.md captures the entire identity in a format both people and AI tools (Cursor, Claude Code, v0) understand. Tokens, typography, rules, and voice in one versionable file.")}</p>
-      </div>
-    </section>
-  );
-}
-export function MCP() {
-  const tr = useTr();
-  return (
-    <section className="sec" id="mcp">
-      <div className="eyebrow"><span className="n">10</span><span>MCP</span></div>
-      <h2 className="h2">{tr("El design system, conectado a la IA", "The design system, wired to AI")}</h2>
-      <div className="holder soon">
-        <span className="pill">{tr("Próximamente", "Coming soon")}</span>
-        <p>{tr("Un servidor MCP para que asistentes de IA consulten componentes, tokens y reglas en tiempo real, y generen prototipos que respetan a Felix desde el primer prompt.", "An MCP server so AI assistants can query components, tokens, and rules in real time — and generate prototypes that respect Felix from the first prompt.")}</p>
-      </div>
-    </section>
-  );
-}
+  const [copied, setCopied] = useState(false);
 
+  const download = () => {
+    const blob = new Blob([designMd], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "DESIGN.md";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(designMd);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* clipboard unavailable — the Download button still works */
+    }
+  };
+
+  const tools: { name: string; es: string; en: string }[] = [
+    {
+      name: "Cursor",
+      es: "Arrastrá el archivo al chat o referencialo con @DESIGN.md. Cursor lo toma como contexto de marca al generar UI.",
+      en: "Drag the file into chat or reference it with @DESIGN.md. Cursor uses it as brand context when generating UI.",
+    },
+    {
+      name: "Claude Code",
+      es: "Pedile que lea DESIGN.md del repo (o adjuntalo) antes de generar componentes; respeta tokens, formas y voz.",
+      en: "Ask it to read DESIGN.md from the repo (or attach it) before generating components; it respects tokens, shapes, and voice.",
+    },
+    {
+      name: "v0",
+      es: "Pegá el contenido como Project Instructions; v0 reskinnea shadcn con la estética de Felix. Ver V0_SETUP.md.",
+      en: "Paste the content as Project Instructions; v0 reskins shadcn with Felix's look. See V0_SETUP.md.",
+    },
+    {
+      name: "ChatGPT · Gemini · otros",
+      es: "Usá «Copiar para tu LLM» y pegá el archivo al inicio de la conversación como contexto.",
+      en: "Use “Copy for your LLM” and paste the file at the start of the conversation as context.",
+    },
+  ];
+
+  return (
+    <section className="sec" id="design-md">
+      <div className="eyebrow"><span className="n">09</span><span>DESIGN.md</span></div>
+      <h2 className="h2">{tr("El sistema, en un archivo que la IA entiende", "The system, in a file AI understands")}</h2>
+      <p className="lead">
+        {tr(
+          "DESIGN.md es el contrato de identidad de Felix en un solo archivo legible por personas y por IA: colores, tipografía, tokens, componentes, formas y voz. Descargalo o copialo y pegáselo a tu herramienta de IA para que genere interfaces fieles a la marca.",
+          "DESIGN.md is Felix's identity contract in a single file readable by people and AI: colors, typography, tokens, components, shapes, and voice. Download it or copy it into your AI tool so it generates on-brand interfaces.",
+        )}
+      </p>
+      <div className="cluster">
+        <Button variant="primary" onClick={download}>
+          <DownloadSimpleIcon />
+          {tr("Descargar DESIGN.md", "Download DESIGN.md")}
+        </Button>
+        <Button variant="line" onClick={copy}>
+          {copied ? <CheckIcon /> : <CopyIcon />}
+          {copied ? tr("¡Copiado!", "Copied!") : tr("Copiar para tu LLM", "Copy for your LLM")}
+        </Button>
+      </div>
+      <h3 className="h3">{tr("Cómo usarlo", "How to use it")}</h3>
+      <div className="voice" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
+        {tools.map((t) => (
+          <div className="v" key={t.name}>
+            <b>{t.name}</b>
+            <p>{tr(t.es, t.en)}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 export function Footer() {
   const tr = useTr();
   return (
