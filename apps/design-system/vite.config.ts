@@ -11,4 +11,10 @@ export default defineConfig({
       "@felix/ui/theme.css": path.resolve(__dirname, "../../packages/ui/src/theme.css"),
     },
   },
+  server: {
+    fs: {
+      // Allow importing files from the repo root (e.g. DESIGN.md?raw) in dev.
+      allow: [path.resolve(__dirname, "../..")],
+    },
+  },
 });

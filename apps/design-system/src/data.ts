@@ -5,21 +5,20 @@ import {
   TextAaIcon,
   ImageIcon,
   ShapesIcon,
-  PuzzlePieceIcon,
   CubeIcon,
   PencilSimpleIcon,
   MarkdownLogoIcon,
-  PlugsConnectedIcon,
   type Icon,
 } from "@phosphor-icons/react";
 
 export interface NavItem {
   id: string;
+  path: string;
+  /** Match the route exactly (only the index route "/" needs this). */
+  end?: boolean;
   icon: Icon;
   es: string;
   en: string;
-  tag?: { es: string; en: string };
-  soon?: boolean;
 }
 export interface NavGroup {
   group: { es: string; en: string };
@@ -30,40 +29,20 @@ export const NAV: NavGroup[] = [
   {
     group: { es: "Fundamentos", en: "Foundations" },
     items: [
-      { id: "overview", icon: SquaresFourIcon, es: "Visión general", en: "Overview" },
-      { id: "principles", icon: StarIcon, es: "Principios", en: "Principles" },
-      { id: "colors", icon: PaletteIcon, es: "Colores", en: "Colors" },
-      { id: "typography", icon: TextAaIcon, es: "Tipografía", en: "Typography" },
-      { id: "illustrations", icon: ImageIcon, es: "Ilustraciones", en: "Illustrations" },
-      { id: "iconography", icon: ShapesIcon, es: "Iconografía", en: "Iconography" },
+      { id: "overview", path: "/", end: true, icon: SquaresFourIcon, es: "Visión general", en: "Overview" },
+      { id: "principles", path: "/principios", icon: StarIcon, es: "Principios", en: "Principles" },
+      { id: "colors", path: "/colores", icon: PaletteIcon, es: "Colores", en: "Colors" },
+      { id: "typography", path: "/tipografia", icon: TextAaIcon, es: "Tipografía", en: "Typography" },
+      { id: "illustrations", path: "/ilustraciones", icon: ImageIcon, es: "Ilustraciones", en: "Illustrations" },
+      { id: "iconography", path: "/iconografia", icon: ShapesIcon, es: "Iconografía", en: "Iconography" },
     ],
   },
   {
     group: { es: "Construcción", en: "Build" },
     items: [
-      { id: "components", icon: PuzzlePieceIcon, es: "Componentes", en: "Components" },
-      { id: "tokens", icon: CubeIcon, es: "Design Tokens", en: "Design Tokens" },
-      { id: "editorial", icon: PencilSimpleIcon, es: "Guía editorial", en: "Editorial" },
-    ],
-  },
-  {
-    group: { es: "Próximamente", en: "Upcoming" },
-    items: [
-      {
-        id: "markdown",
-        icon: MarkdownLogoIcon,
-        es: "Markdown",
-        en: "Markdown",
-        tag: { es: "Exp", en: "Exp" },
-      },
-      {
-        id: "mcp",
-        icon: PlugsConnectedIcon,
-        es: "MCP",
-        en: "MCP",
-        tag: { es: "Pronto", en: "Soon" },
-        soon: true,
-      },
+      { id: "tokens", path: "/tokens", icon: CubeIcon, es: "Design Tokens", en: "Design Tokens" },
+      { id: "editorial", path: "/editorial", icon: PencilSimpleIcon, es: "Guía editorial", en: "Editorial" },
+      { id: "design-md", path: "/design-md", icon: MarkdownLogoIcon, es: "DESIGN.md", en: "DESIGN.md" },
     ],
   },
 ];
@@ -150,3 +129,6 @@ export const INVENTORY: { group: string; items: string[] }[] = [
   },
   { group: "Organisms", items: ["Sidebar"] },
 ];
+
+/** URL-safe slug for a component name, e.g. "RadioGroup" → "radiogroup". */
+export const slugify = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
