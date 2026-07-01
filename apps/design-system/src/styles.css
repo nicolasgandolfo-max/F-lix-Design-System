@@ -105,7 +105,9 @@ body {
 
 /* Main */
 .main { min-width: 0; }
-.wrap { max-width: 920px; margin: 0 auto; padding: 0 40px; }
+.wrap { max-width: 1680px; margin: 0 auto; padding: 0 48px; }
+/* .lead / .hero .desc / .holder p already cap their own width in ch below,
+   so prose stays readable even though the content column is now much wider. */
 .sec { padding: 84px 0 16px; scroll-margin-top: 24px; border-top: 1px solid var(--stone); }
 .sec.flush { border-top: 0; padding-top: 24px; }
 .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; font-size: 12px; letter-spacing: .14em;
@@ -125,8 +127,13 @@ body {
 .kicker::before { content: ""; width: 26px; height: 2px; background: var(--turquoise); }
 .hero h1 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(2.7rem, 6.2vw, 5.1rem); line-height: .98;
   letter-spacing: -.035em; margin: 0 0 26px; text-wrap: balance; }
-.hero h1 em { font-style: normal; color: var(--turquoise); position: relative; white-space: nowrap; }
+.hero h1 em { font-style: normal; color: var(--turquoise); position: relative; }
 .hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .10em; background: var(--lime); z-index: -1; opacity: .9; }
+/* Keep the highlighted phrase intact only once there's room for it — at
+   narrow widths `nowrap` would force the whole page to scroll horizontally. */
+@media (min-width: 480px) {
+  .hero h1 em { white-space: nowrap; }
+}
 .hero .desc { font-size: 1.28rem; line-height: 1.5; color: var(--fg-muted); max-width: 60ch; margin: 0 0 34px; }
 .meta { display: flex; flex-wrap: wrap; gap: 10px 26px; padding-top: 26px; border-top: 1px solid var(--stone); }
 .meta div { display: flex; flex-direction: column; gap: 3px; }
@@ -134,7 +141,7 @@ body {
 .meta .v { font-family: var(--font-mono); font-size: 14px; color: var(--slate); font-variant-numeric: tabular-nums; }
 
 /* Start grid */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 8px; }
 .tile { display: flex; flex-direction: column; gap: 10px; padding: 22px; background: var(--white); border: 1px solid var(--border-strong);
   border-radius: 16px; text-decoration: none; color: inherit; transition: transform .18s, box-shadow .18s, border-color .18s; cursor: pointer; }
 .tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--concrete); }
@@ -145,14 +152,14 @@ body {
 .tile .go { margin-top: auto; font-size: 13px; font-weight: 600; color: var(--turquoise-800); display: inline-flex; gap: 5px; align-items: center; }
 
 /* Principles */
-.princ { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.princ { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
 .princ .p { padding: 24px; background: var(--white); border: 1px solid var(--border-strong); border-radius: 16px; }
 .princ .p .num { font-family: var(--font-heading); font-weight: 900; font-size: 1.5rem; color: var(--turquoise); line-height: 1; }
 .princ .p b { display: block; margin: 14px 0 6px; font-size: 16px; font-weight: 600; }
 .princ .p span { font-size: 14px; color: var(--fg-muted); line-height: 1.5; }
 
 /* Colors */
-.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
 .sw { border: 1px solid var(--border-strong); border-radius: 14px; overflow: hidden; background: var(--white); cursor: pointer;
   transition: transform .15s, box-shadow .15s; text-align: left; padding: 0; font: inherit; color: inherit; }
 .sw:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -204,7 +211,7 @@ body {
 .dd li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
 .dd .do li::before { content: "+"; color: var(--status-success-text); }
 .dd .dont li::before { content: "\00d7"; color: var(--status-error-text); }
-.voice { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+.voice { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 18px; }
 .voice .v { padding: 18px; border: 1px solid var(--border-strong); border-radius: 14px; background: var(--white); }
 .voice .v b { font-size: 14px; } .voice .v p { font-size: 13px; color: var(--fg-muted); margin: 6px 0 0; }
 
@@ -214,9 +221,7 @@ body {
 .holder.exp .pill { background: var(--status-warning-bg); color: var(--status-warning-text); }
 .holder.soon .pill { background: var(--status-info-bg); color: var(--status-info-text); }
 .holder p { margin: 0 auto; color: var(--fg-muted); max-width: 52ch; }
-.illus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.illus .blob { aspect-ratio: 4/3; border-radius: 16px; border: 1px solid var(--border-strong); display: grid; place-items: center; overflow: hidden; }
-.icongrid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-top: 8px; }
+.icongrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 10px; margin-top: 8px; }
 .icongrid .ig { aspect-ratio: 1; border: 1px solid var(--border-strong); border-radius: 12px; display: grid; place-items: center; background: var(--white); color: var(--slate); }
 .icongrid .ig svg { width: 22px; height: 22px; }
 .foot { padding: 60px 0 80px; color: var(--fg-subtle); font-size: 13px; border-top: 1px solid var(--stone); margin-top: 60px; }
@@ -232,9 +237,9 @@ body {
   .scrim.show { display: block; position: fixed; inset: 0; background: rgba(8,36,34,.4); z-index: 45; }
   .wrap { padding: 0 22px; }
   .hero { padding-top: 78px; }
-  .grid, .princ, .fam-card, .dd, .voice, .illus { grid-template-columns: 1fr; }
-  .swatches { grid-template-columns: 1fr 1fr; }
-  .icongrid { grid-template-columns: repeat(5, 1fr); }
+  /* .grid/.princ/.swatches/.voice/.icongrid/.comp-grid are auto-fit/auto-fill
+     and reflow on their own; only the still-fixed 2-up grids need a override. */
+  .fam-card, .dd { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .spec .row { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -244,7 +249,7 @@ body {
 /* ───────────────────────── Components catalog ───────────────────────── */
 .brand { text-decoration: none; color: var(--linen); cursor: pointer; }
 
-.comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 4px 0 8px; }
+.comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 4px 0 8px; }
 .comp-card { display: flex; align-items: center; justify-content: space-between; gap: 10px;
   padding: 14px 16px; background: var(--white); border: 1px solid var(--border-strong); border-radius: 12px;
   text-decoration: none; color: var(--slate); font-weight: 600; font-size: 14px;
