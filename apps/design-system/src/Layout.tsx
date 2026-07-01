@@ -8,12 +8,14 @@ import { useTr } from "./i18n";
 export function Layout() {
   const tr = useTr();
   const [open, setOpen] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
-  // Reset scroll to top on every navigation.
+  // Reset scroll to top on every navigation, unless the link targets an anchor
+  // (component group pages use #slug to jump to a specific component).
   useEffect(() => {
+    if (hash) return;
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return (
     <>

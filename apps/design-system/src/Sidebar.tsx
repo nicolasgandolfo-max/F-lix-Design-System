@@ -1,7 +1,7 @@
-import { Fragment } from "react";
-import { NavLink } from "react-router-dom";
-import { PuzzlePieceIcon } from "@phosphor-icons/react";
-import { NAV, INVENTORY, slugify } from "./data";
+import { Fragment, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { CaretRightIcon, PuzzlePieceIcon } from "@phosphor-icons/react";
+import { NAV, INVENTORY, GROUP_SLUGS, GROUP_ICONS, ILLUSTRATION_SECTIONS, slugify } from "./data";
 import { useLang, useTr } from "./i18n";
 
 function Logo() {
@@ -24,6 +24,16 @@ const navClass = ({ isActive }: { isActive: boolean }) => (isActive ? "active" :
 export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: boolean }) {
   const { lang, setLang } = useLang();
   const tr = useTr();
+  const { pathname } = useLocation();
+
+  // Groups with nested sub-items (Atoms/Molecules/Organisms/Ilustraciones) start collapsed;
+  // they auto-expand while their page is active, and the user can pin them open/closed via
+  // the caret — that explicit choice then wins over the auto-expand-on-active default.
+  const [manualOpen, setManualOpen] = useState<Record<string, boolean>>({});
+  const isGroupOpen = (id: string, active: boolean) => manualOpen[id] ?? active;
+  const toggleGroup = (id: string, active: boolean) =>
+    setManualOpen((m) => ({ ...m, [id]: !isGroupOpen(id, active) }));
+
   return (
     <aside className={"sidebar" + (open ? " open" : "")} id="sidebar">
       <NavLink to="/" className="brand" onClick={onNavigate} aria-label="Felix — inicio">
@@ -38,15 +48,50 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
             <span className="nav-group">{tr(g.group.es, g.group.en)}</span>
             {g.items.map((it) => {
               const Icon = it.icon;
+              if (it.id !== "illustrations") {
+                return (
+                  <NavLink key={it.id} to={it.path} end={it.end} onClick={onNavigate} className={navClass}>
+                    {({ isActive }) => (
+                      <>
+                        <Icon weight={isActive ? "fill" : "regular"} />
+                        <span>{tr(it.es, it.en)}</span>
+                      </>
+                    )}
+                  </NavLink>
+                );
+              }
+              // Illustrations has 4 nested subsections — same collapsible pattern as the
+              // Componentes groups below.
+              const active = pathname === it.path;
+              const expanded = isGroupOpen("illustrations", active);
               return (
-                <NavLink key={it.id} to={it.path} end={it.end} onClick={onNavigate} className={navClass}>
-                  {({ isActive }) => (
-                    <>
-                      <Icon weight={isActive ? "fill" : "regular"} />
-                      <span>{tr(it.es, it.en)}</span>
-                    </>
-                  )}
-                </NavLink>
+                <Fragment key={it.id}>
+                  <div className="nav-row">
+                    <NavLink to={it.path} onClick={onNavigate} className={navClass}>
+                      {({ isActive }) => (
+                        <>
+                          <Icon weight={isActive ? "fill" : "regular"} />
+                          <span>{tr(it.es, it.en)}</span>
+                        </>
+                      )}
+                    </NavLink>
+                    <button
+                      type="button"
+                      className={"nav-caret" + (expanded ? " open" : "")}
+                      aria-expanded={expanded}
+                      aria-label={expanded ? tr("Colapsar", "Collapse") : tr("Expandir", "Expand")}
+                      onClick={() => toggleGroup("illustrations", active)}
+                    >
+                      <CaretRightIcon />
+                    </button>
+                  </div>
+                  {expanded &&
+                    ILLUSTRATION_SECTIONS.map((s) => (
+                      <Link key={s.id} to={`/ilustraciones#${s.id}`} onClick={onNavigate} className="sub">
+                        <span>{tr(s.es, s.en)}</span>
+                      </Link>
+                    ))}
+                </Fragment>
               );
             })}
           </Fragment>
@@ -62,21 +107,44 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
             </>
           )}
         </NavLink>
-        {INVENTORY.map((group) => (
-          <Fragment key={group.group}>
-            <span className="nav-subgroup">{group.group}</span>
-            {group.items.map((name) => (
-              <NavLink
-                key={name}
-                to={`/componentes/${slugify(name)}`}
-                onClick={onNavigate}
-                className={({ isActive }) => "sub" + (isActive ? " active" : "")}
-              >
-                <span>{name}</span>
-              </NavLink>
-            ))}
-          </Fragment>
-        ))}
+        {INVENTORY.map((group) => {
+          const groupSlug = GROUP_SLUGS[group.group];
+          const GroupIcon = GROUP_ICONS[group.group];
+          const active = pathname === `/componentes/${groupSlug}`;
+          const expanded = isGroupOpen(groupSlug, active);
+          return (
+            <Fragment key={group.group}>
+              <div className="nav-row">
+                <NavLink to={`/componentes/${groupSlug}`} onClick={onNavigate} className={navClass}>
+                  {({ isActive }) => (
+                    <>
+                      <GroupIcon weight={isActive ? "fill" : "regular"} />
+                      <span>{group.group}</span>
+                    </>
+                  )}
+                </NavLink>
+                <button
+                  type="button"
+                  className={"nav-caret" + (expanded ? " open" : "")}
+                  aria-expanded={expanded}
+                  aria-label={expanded ? tr("Colapsar", "Collapse") : tr("Expandir", "Expand")}
+                  onClick={() => toggleGroup(groupSlug, active)}
+                >
+                  <CaretRightIcon />
+                </button>
+              </div>
+              {/* Nested one level deeper — plain Link (not NavLink) so they never pick up an
+                  auto "active" class; all items in a group share the same pathname (only the
+                  hash differs), so only the group row above should ever look selected. */}
+              {expanded &&
+                group.items.map((name) => (
+                  <Link key={name} to={`/componentes/${groupSlug}#${slugify(name)}`} onClick={onNavigate} className="sub">
+                    <span>{name}</span>
+                  </Link>
+                ))}
+            </Fragment>
+          );
+        })}
       </nav>
 
       <div className="side-foot">
