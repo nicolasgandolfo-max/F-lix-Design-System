@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { Layout } from "./Layout";
 import {
   Overview,
@@ -6,13 +6,12 @@ import {
   Colors,
   Typography,
   Illustrations,
-  Iconography,
   Tokens,
   Editorial,
   DesignMd,
 } from "./sections";
 import { ComponentsIndex } from "./pages/ComponentsIndex";
-import { ComponentPage } from "./pages/ComponentPage";
+import { ComponentGroupPage } from "./pages/ComponentGroupPage";
 import { useTr } from "./i18n";
 
 function NotFound() {
@@ -36,9 +35,10 @@ export function App() {
         <Route path="colores" element={<Colors />} />
         <Route path="tipografia" element={<Typography />} />
         <Route path="ilustraciones" element={<Illustrations />} />
-        <Route path="iconografia" element={<Iconography />} />
+        {/* Iconography merged into Illustrations — keep old links working. */}
+        <Route path="iconografia" element={<Navigate to="/ilustraciones" replace />} />
         <Route path="componentes" element={<ComponentsIndex />} />
-        <Route path="componentes/:slug" element={<ComponentPage />} />
+        <Route path="componentes/:groupSlug" element={<ComponentGroupPage />} />
         <Route path="tokens" element={<Tokens />} />
         <Route path="editorial" element={<Editorial />} />
         <Route path="design-md" element={<DesignMd />} />

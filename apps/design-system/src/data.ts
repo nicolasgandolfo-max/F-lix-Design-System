@@ -4,10 +4,12 @@ import {
   PaletteIcon,
   TextAaIcon,
   ImageIcon,
-  ShapesIcon,
   CubeIcon,
   PencilSimpleIcon,
   MarkdownLogoIcon,
+  AtomIcon,
+  CirclesThreeIcon,
+  TreeStructureIcon,
   type Icon,
 } from "@phosphor-icons/react";
 
@@ -34,7 +36,6 @@ export const NAV: NavGroup[] = [
       { id: "colors", path: "/colores", icon: PaletteIcon, es: "Colores", en: "Colors" },
       { id: "typography", path: "/tipografia", icon: TextAaIcon, es: "Tipografía", en: "Typography" },
       { id: "illustrations", path: "/ilustraciones", icon: ImageIcon, es: "Ilustraciones", en: "Illustrations" },
-      { id: "iconography", path: "/iconografia", icon: ShapesIcon, es: "Iconografía", en: "Iconography" },
     ],
   },
   {
@@ -45,6 +46,14 @@ export const NAV: NavGroup[] = [
       { id: "design-md", path: "/design-md", icon: MarkdownLogoIcon, es: "DESIGN.md", en: "DESIGN.md" },
     ],
   },
+];
+
+/** Anchors within the /ilustraciones page, shown as a nested nav list under "Ilustraciones". */
+export const ILLUSTRATION_SECTIONS: { id: string; es: string; en: string }[] = [
+  { id: "felix-illustrations", es: "Ilustraciones de Felix", en: "Felix illustrations" },
+  { id: "flags", es: "Banderas", en: "Flags" },
+  { id: "phosphor", es: "Iconografía Phosphor", en: "Phosphor icons" },
+  { id: "extra-icons", es: "Íconos extras", en: "Extra icons" },
 ];
 
 export interface Swatch {
@@ -67,6 +76,34 @@ export const STATUS_COLORS: Swatch[] = [
   { name: "Warning", hex: "#ffd200" },
   { name: "Error", hex: "#f26629" },
   { name: "Info", hex: "#3b2e8c" },
+];
+
+export interface TypeStyle {
+  token: string;
+  category: "Display" | "Headings" | "Body" | "Caption";
+  family: "Plain" | "Saans";
+  weight: number;
+  size: number;
+  lineHeight: number;
+  letterSpacing: string;
+  es: string;
+  en: string;
+}
+
+/** Every text style token from the Figma type scale, largest to smallest within its category. */
+export const TYPE_SCALE: TypeStyle[] = [
+  { token: "text-display-xl", category: "Display", family: "Plain", weight: 700, size: 56, lineHeight: 1.2, letterSpacing: "-2px", es: "$1,200.00", en: "$1,200.00" },
+  { token: "text-display-lg", category: "Display", family: "Plain", weight: 700, size: 48, lineHeight: 1.2, letterSpacing: "-2px", es: "Enviaste con éxito", en: "Sent successfully" },
+  { token: "text-display-md", category: "Display", family: "Plain", weight: 700, size: 28, lineHeight: 1.1, letterSpacing: "-1px", es: "Envío confirmado", en: "Transfer confirmed" },
+  { token: "text-heading-1", category: "Headings", family: "Saans", weight: 600, size: 36, lineHeight: 1.2, letterSpacing: "-1px", es: "Tu dinero está en camino", en: "Your money is on its way" },
+  { token: "text-heading-2", category: "Headings", family: "Saans", weight: 600, size: 30, lineHeight: 1.2, letterSpacing: "0px", es: "Historial de envíos", en: "Transfer history" },
+  { token: "text-heading-3", category: "Headings", family: "Plain", weight: 700, size: 24, lineHeight: 1.3, letterSpacing: "0px", es: "Título de pantalla", en: "Screen title" },
+  { token: "text-heading-4", category: "Headings", family: "Plain", weight: 700, size: 20, lineHeight: 1.5, letterSpacing: "0px", es: "Subtítulo de sección", en: "Section subtitle" },
+  { token: "text-body-lg", category: "Body", family: "Saans", weight: 400, size: 18, lineHeight: 1.3, letterSpacing: "0px", es: "Texto de cuerpo grande para introducciones.", en: "Large body text for introductions." },
+  { token: "text-body", category: "Body", family: "Saans", weight: 400, size: 16, lineHeight: 1.2, letterSpacing: "0px", es: "Texto de cuerpo para instrucciones y descripciones claras.", en: "Body text for clear instructions and descriptions." },
+  { token: "text-body-sm", category: "Body", family: "Saans", weight: 400, size: 14, lineHeight: 1.5, letterSpacing: "0px", es: "Texto de cuerpo pequeño para detalles secundarios.", en: "Small body text for secondary details." },
+  { token: "text-caption", category: "Caption", family: "Saans", weight: 400, size: 12, lineHeight: 1.2, letterSpacing: "0.25px", es: "RECIBIDO · HACE 2 MIN", en: "RECEIVED · 2 MIN AGO" },
+  { token: "text-caption-sm", category: "Caption", family: "Saans", weight: 400, size: 11, lineHeight: 1.1, letterSpacing: "0px", es: "TÉRMINOS Y CONDICIONES", en: "TERMS & CONDITIONS" },
 ];
 
 export const COLOR_TOKENS: { v: string; hex: string; es: string; en: string }[] = [
@@ -108,6 +145,26 @@ export const SHADOW_TOKENS: { t: string; es: string; en: string }[] = [
   { t: "--shadow-turquoise", es: "Glow de botón primario", en: "Primary button glow" },
   { t: "--shadow-selection", es: "Foco turquesa (6px)", en: "Turquoise focus (6px)" },
 ];
+
+/** URL slug for each component group, used to build a single page per group. */
+export const GROUP_SLUGS: Record<string, string> = {
+  Atoms: "atoms",
+  Molecules: "molecules",
+  Organisms: "organisms",
+};
+
+export const GROUP_LABELS: Record<string, { es: string; en: string }> = {
+  Atoms: { es: "Átomos", en: "Atoms" },
+  Molecules: { es: "Moléculas", en: "Molecules" },
+  Organisms: { es: "Organismos", en: "Organisms" },
+};
+
+/** Icon shown next to each component group's own nav row (Atoms, Molecules, Organisms). */
+export const GROUP_ICONS: Record<string, Icon> = {
+  Atoms: AtomIcon,
+  Molecules: CirclesThreeIcon,
+  Organisms: TreeStructureIcon,
+};
 
 export const INVENTORY: { group: string; items: string[] }[] = [
   {
